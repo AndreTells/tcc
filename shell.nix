@@ -5,6 +5,7 @@ pkgs.clangStdenv.mkDerivation {
   name="tcc-dev-environment";
   buildInputs = with pkgs; [
     llvmPackages_21.libclang
+    lldb
   ];
   shellHook=''
     export CPATH=\
