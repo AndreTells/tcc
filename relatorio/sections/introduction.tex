@@ -1,0 +1,33 @@
+\section{Introdução}
+O desenvolvimento de programas no mundo atual depende frequentemente do uso de
+APIs, muitas vezes desenvolvidas por equipes completamente desconexas.
+Frequentemente, a utilização de funções provenientes de tais fontes espera que
+uma lógica interna seja seguida para evitar erros como \textit{memory leaks}, 
+arquivos que permanecem abertos sem necessidade ou até \textit{use after free}s.
+Tais descuidos podem levar a nenhuma consequência grave, graves erros de
+segurança ou apenas comportamentos inesperados pela aplicação; as implicações de
+violar os padrões de uso de uma API são muitas vezes imprevisíveis.
+
+Contudo, descobrir quais padrões de uso são necessários por uma API é muitas
+vezes difícil. A fonte principal para tal tipo de informação seria a
+documentação da API em questão, porém muitas vezes esta se mostra insuficiente
+ou limitada. Um exemplo claro de tal são as páginas do manual Linux para as
+funções \textit{fopen} e \textit{fclose} na linguagem C \cite{man_fopen}
+\cite{man_fclose}.
+
+Qualquer desenvolvedor de C informado saberia dizer que um \textit{fclose}
+precisa ser chamado após qualquer \textit{fopen}. Porém as páginas do manual de
+ambas estas funções se referem a outra apenas tangencialmente em seus textos.
+Desta forma, frequentemente, o aprendizado de padrões de uso se passa não por
+uma simples leitura da documentação, mas sim como algo visto em exemplos de
+código ou através de discussões informais com outros desenvolvedores.
+
+Devido a tal, os reais padrões de uso que devem ser respeitados quando ao
+utilizar APIs permanecem obscuros. Assim, vários estudos foram e continuam a
+serem feitos para detectar tais de forma automática.
+
+O presente estudo, então, busca aplicar técnicas desenvolvidas na área para a
+detecção de padrões de uso na \textit{glibc}. Os objetivos principais são
+realizar uma análise comparativa das diferentes formas que tal mineração de
+dados pode ser feita, quais as vantagens e desvantagens de cada e gerar
+catálogos dos padrões de uso encontrados por cada método.  
