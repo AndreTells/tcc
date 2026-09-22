@@ -13,11 +13,13 @@ objetivo principal de tal prática é facilitar o desenvolvimento de software em
 contextos / áreas de conhecimento específicas.
 
 \subsection{Padrões de Uso}
-Um padrão de uso, como descrito em \cite{}, é um conjunto de funções de uma API
-que são utilizados para realizar alguma tarefa. Estes podem ser sub
-categorizados mais especificamente em padrões de uso ordenados e não ordenados.
-No caso dos primeiros, o padrão indica a ordem na qual as funções são chamadas
-quando utilizadas em conjunto, enquanto no segundo caso não há tal restrição.
+Um padrão de uso na área tem uma definição vaga, variando ligeiramente entre
+autores diferentes. Seguindo o proposto em \cite{api_property_inference}, um
+padrão de uso é uma forma comum de se utilizar uma API. Utilizando a mesma
+fonte, tais padrões podem ser sub categorizados especificamente em padrões de
+uso ordenados e não ordenados. No caso dos primeiros, o padrão indica a ordem na
+qual as funções são chamadas quando utilizadas em conjunto, enquanto no segundo
+caso não há tal restrição.
 
 \subsection{Regras de Associação}
 Como descrito pela primeira vez em \cite{minig_association_rules}, uma regra de
@@ -31,3 +33,14 @@ transações $T$ satisfaz uma dada regra de associação, sendo $c$ denominado
 fator de confiança.
 
 \subsection{Clustering}
+
+Como apresentado em
+\cite{recommender_system_software_engineering_nearest_neighbours}
+\textit{clustering} é uma técnica de aprendizado de máquina não supervisionado
+que busca classificar os dados baseado apenas na distribuição destes, sem levar
+em conta categorias pré-definidas. Uma vez que tais categorias estão
+construídas, novos dados podem ser rapidamente categorizados comparando os com
+métricas como o centro dos clusters detectados.
+
+Tais clusters são criados analisando a distancia dos nós entre si segundo uma
+dada função de distância.
