@@ -19,7 +19,7 @@ pkgs.stdenv.mkDerivation {
 
   # TODO swap test.txt for reference to module to generate .csv file
   OUTPUT_FILE_NAME = "filtered_graph.csv";
-  CHUNCK_SIZE = 100;
+  CHUNCK_SIZE = 50;
 
   buildPhase = ''
     clang++ src/main.cpp
@@ -35,7 +35,7 @@ pkgs.stdenv.mkDerivation {
     cd ..
     touch $OUTPUT_FILE_NAME
     head test.txt -n 1 >> $OUTPUT_FILE_NAME
-    ls chuncks | xargs -I {} ./a.out ./chuncks/{}  >> $OUTPUT_FILE_NAME
+    ls chuncks | xargs -P 4 -I {} sh -c "./a.out ./chuncks/{}  >> $OUTPUT_FILE_NAME; echo 'done {}'"
     mv $OUTPUT_FILE_NAME $out
   '';
 }

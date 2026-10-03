@@ -12,6 +12,7 @@ pkgs.mkShell
   packages = [
       pkgs.clang-tools 
       pkgs.clang 
+      pkgs.lldb
       glibc_functions_list
   ];
 

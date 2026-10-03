@@ -41,11 +41,22 @@ set<string> get_registered_functions(char* glibc_fnct_list_path){
   ifstream file(glibc_fnct_list_path);
   set<string> out = {};
   string line;
-  while(getline(file,line)){
+  while(getline(file,line))
     out.insert(line);
-  }
   file.close();
   return out;
+}
+
+void _rstrip(char* str){
+  char* it = str;
+  while(*it!='\0'){
+    if(*it=='\n' || *it==' ' || *it=='\r'){
+      *it = '\0';
+      break;
+    }
+    it+=1;
+  }
+  return;
 }
 
 void filter_file(char* target_file,set<string> registered_functions){
@@ -74,11 +85,12 @@ void filter_file(char* target_file,set<string> registered_functions){
   while(getline(file, line)){
     strcpy(line_str,line.c_str());
     //discard the cols before the target feature
-    for(int i=0; i<col_i; i++)
-      strtok((char*)line_str, ",");
+    strtok((char*)line_str, ",");
+    for(int i=1; i<col_i; i++)
+      strtok(NULL, ",");
 
     char* callee_str= strtok(NULL,",");
-
+    _rstrip(callee_str);
     if(registered_functions.find(callee_str) != registered_functions.end()){
       cout << line << endl;
     }
