@@ -7,7 +7,7 @@ let
 in 
 pkgs.mkShell
 {
-    name="tcc-dev-environment";
+    name="glibc_functions_list_dev_shell";
     packages = with pkgs; [
       clang-tools 
       clang 

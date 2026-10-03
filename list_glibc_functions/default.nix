@@ -16,6 +16,8 @@ pkgs.stdenv.mkDerivation
     llvmPackages_latest.libclang
   ];
 
+  OUTPUT_FILE_NAME="glibc_functions.txt";
+
   buildPhase = ''
     clang++ src/main.cpp -lclang
   '';
@@ -23,6 +25,6 @@ pkgs.stdenv.mkDerivation
   installPhase = ''
     find ${pkgs.glibc.dev}/include -name '*\.h' | xargs -I {} ./a.out {} >> glibc_functions.txt
     mkdir -p $out
-    mv ./glibc_functions.txt $out
+    mv ./$OUTPUT_FILE_NAME $out
   '';
 }
