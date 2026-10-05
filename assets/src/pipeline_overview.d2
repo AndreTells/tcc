@@ -1,0 +1,47 @@
+direction: right
+
+github_repos: {
+  label: Github Repos
+  style.multiple: true
+}
+
+glibc: {
+  label: GNU libc
+}
+
+glibc_miner: {
+  label: Function Declaration Miner 
+}
+
+miner: {
+  label: Call Graph Miner
+}
+
+filter: {
+  label: Filter Graph to Only Glibc 
+}
+
+github_repos -> miner
+glibc -> glibc_miner 
+
+glibc_miner -> filter
+miner -> filter
+
+container: Pattern Mining{
+  direction: right
+  itemset: {
+    label: Item Set Pattern Mining
+  }
+
+  clustering: {
+    label: Cluster Pattern Mining
+  }
+
+  probabilistic_models: {
+    label: Probabilistic Model Pattern Mining
+  }
+}
+
+filter -> container.itemset 
+filter -> container.clustering
+filter -> container.probabilistic_models
