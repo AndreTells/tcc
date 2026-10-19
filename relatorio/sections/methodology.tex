@@ -1,1 +1,62 @@
 \section{Metodologia}
+\subsection{Objetivo}
+% TODO: comparação qualitativa e quantitativa ou apenas qualitativa
+O presente estudo busca realizar uma comparação qualitativa entre diferentes
+métodos para minerar padrões de uso de APIs da \textit{glibc} a fim de
+proporcionar uma visão clara das vantagens e desvantagem de cada forma de
+solucionar o problema. Busca-se também disponibilizar publicamente um catálogo
+de padrões de uso no mesmo domínio para uso posteriormente em outros estudos. 
+
+Em específico serão avaliados os métodos: 
+
+\begin{itemize}
+  \item aprendizado de regras de associação
+  \item clustering
+  \item modelo probabilístico
+\end{itemize}
+
+A seguir é especificado como tais são aplicados ao problema de mineração de
+padrões de uso.
+
+\subsubsection{Aprendizado de Regras de Associação}
+
+Cada função transformada em uma transação e os itens nela contidos são as
+funções que esta chama. O identificador único das funções é seu nome acrecido do
+caminho até o arquivo que o contem e o nome do projeto no qual este arquivo se
+encontra.
+
+\subsubsection{Clustering}
+
+\subsubsection{Modelo Probabilístico}
+
+\subsection{Avaliação dos Métodos}
+
+% TODO: é necessário apresentar como a lista de repositórios foi obtida ?
+Todos os algoritmos apresentados nas seções anteriores são aplicados sobre o
+mesmo conjunto de dados, uma lista de projetos disponibilizados no Github
+contendo um número mínimo de contribuidores / avaliações afim de obter apenas
+códigos que tenham alguma garantia de qualidade. Antes da execução dos
+algoritmos, contudo, uma série de etapas de pré-processamento são realizadas,
+como é demonstrado na figura \ref{fig:pipeline_overview}.
+
+%TODO: traduzir imagem
+\begin{figure}[h]
+  \includegraphics[width=1\textwidth]{pipeline_overview}
+  \caption{Visão global das etapas para minerar os padrões de uso neste estudo}
+  \label{fig:pipeline_overview}
+\end{figure}
+
+A partir dos arquivos fontes escritos em na linguagem C nos projetos
+selecionados, um grafo de chamadas é extraído para as análises. A fim de limitar
+o escopo de tal dataset a apenas o escopo do presente estudo, apenas a chamadas
+de funções da \textit{glibc} são levadas em conta. Assim, o grafo de chamadas
+minerado dos arquivos é filtrado para se adequar a tal.
+
+Porém, para realizar tal redução, faz-se necessário obter uma lista das funções
+definidas na \textit{glibc}. Tal tarefa, como é visível na
+figura \ref{fig:pipeline_overview} é feita em paralelo a tarefa de minerar o
+grafo de chamadas.
+
+Uma vez que estes dois processos estão finalizados, os dados podem são então
+formatados para adequar-se a entrada esperada por cada um dos algoritmos
+utilizados.
