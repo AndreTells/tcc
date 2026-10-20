@@ -1,0 +1,33 @@
+\section{Ameaças à Validade}
+
+Os pontos que mais podem impactar os resultados do presente são a escolha de
+escopo, considerar funções apenas chamadas diretamente por outra no código, e os
+projetos escolhidos.
+
+O escopo foi escolhido de forma a mitigar possíveis erros enquanto controlando a
+complexidade da tarefa de minerar as chamadas de funções do código. Apesar de
+ser uma possível ameaça aos resultados, tal torna apenas os padrões encontrados
+no presente estudo mais restritos do que talvez o seriam realmente. 
+
+Um exemplo simples, porém comum, que escaparia a detecção dos métodos empregados
+seria criar uma função que tracasse / liberasse um mutex e escrevesse algo no
+canal de erro para fins de observabilidade. Em tal caso, as chamadas à funções
+de trancar e liberar o mutex se encontrariam em funções distintas, mesmo que no
+fluxo de execução do código estivessem no mesmo local.
+
+Contudo, é importante apontar que, seguindo os presentes procedimentos, um
+padrão que não ocorre jamais seria observado.
+
+O dataset utilizado nas análises, os projetos escolhidos, também tem um grande
+impacto nos padrões detectados. Supondo que os exemplos em si possuam erros,
+como é sempre o caso para programas, os padrões de uso detectados nesses também
+estariam errados. 
+
+A fim de mitigar este problemas, os projetos para análise foram escolhidos
+exatamente por sua popularidade e longevidade. Apesar de isto não garantir que
+estejam livres de erros, espera-se que o fato de os programas em questão serem
+utilizados por vários usuários indique minimamente que funcionem como esperado.
+Dessa forma, como são projetos funcionais, espera-se que tais sigam minimamente
+padrões de uso reais. 
+
+%TODO: mencionar que padrões de uso != regras de uso

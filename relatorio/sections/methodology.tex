@@ -29,7 +29,7 @@ encontra.
 
 \subsubsection{Modelo Probabilístico}
 
-\subsection{Avaliação dos Métodos}
+\subsection{Mineração dos Padrões de Uso}
 
 % TODO: é necessário apresentar como a lista de repositórios foi obtida ?
 Todos os algoritmos apresentados nas seções anteriores são aplicados sobre o
@@ -46,6 +46,7 @@ como é demonstrado na figura \ref{fig:pipeline_overview}.
   \label{fig:pipeline_overview}
 \end{figure}
 
+%TODO: mencionar que apenas funções chamadas diretamente são consideradas
 A partir dos arquivos fontes escritos em na linguagem C nos projetos
 selecionados, um grafo de chamadas é extraído para as análises. A fim de limitar
 o escopo de tal dataset a apenas o escopo do presente estudo, apenas a chamadas
@@ -53,10 +54,19 @@ de funções da \textit{glibc} são levadas em conta. Assim, o grafo de chamadas
 minerado dos arquivos é filtrado para se adequar a tal.
 
 Porém, para realizar tal redução, faz-se necessário obter uma lista das funções
-definidas na \textit{glibc}. Tal tarefa, como é visível na
-figura \ref{fig:pipeline_overview} é feita em paralelo a tarefa de minerar o
-grafo de chamadas.
+definidas na \textit{glibc}. Tal tarefa, como é visível na figura
+\ref{fig:pipeline_overview} é feita em paralelo a tarefa de minerar o grafo de
+chamadas.
 
 Uma vez que estes dois processos estão finalizados, os dados podem são então
 formatados para adequar-se a entrada esperada por cada um dos algoritmos
 utilizados.
+
+\subsection{Comparação dos Resultados}
+%TODO: métodos estatisticos recomendados pelo professor
+
+Comparação de qual \% dos padrões detectados por um método também é detectado
+por outro.
+
+Média de \% do dataset inicial que cumpre o padrão supostamente detectado pelos
+algoritmos.
