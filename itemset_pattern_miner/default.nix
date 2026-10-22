@@ -18,12 +18,12 @@ pkgs.stdenv.mkDerivation {
   src=./.;
 
   DATA=''${data}/${data.OUTPUT_FILE_NAME}'';
-  OUTPUT_FILE_NAME = "filtered_graph.csv";
+  OUTPUT_FILE_NAME = "itemset_patterns.txt"; 
 
   buildPhase = ''
     head $DATA -n 1 >> temp.csv
     sort <( tail $DATA -n +2) | uniq >> temp.csv 
-    python3 itemset_pattern_miner.py temp.csv >> output.txt
+    python3 itemset_pattern_miner.py temp.csv >> $OUTPUT_FILE_NAME
     rm temp.csv
   '';
 
