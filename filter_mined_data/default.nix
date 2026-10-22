@@ -31,11 +31,12 @@ pkgs.stdenv.mkDerivation {
     mkdir -p chuncks
     cd chuncks
     split -l $CHUNCK_SIZE <(tail -n +2 ../test.txt);
-    ls | xargs -I {} sh -c "cat <(head ../test.txt -n 1) <(cat {}) > {}.csv; rm {}"
+    echo 'finished split'
+    ls | xargs -P 100 -I {} sh -c "cat <(head ../test.txt -n 1) <(cat {}) > {}.csv; rm {}; echo 'formatted {}'"
     cd ..
     touch $OUTPUT_FILE_NAME
     head test.txt -n 1 >> $OUTPUT_FILE_NAME
-    ls chuncks | xargs -P 4 -I {} sh -c "./a.out ./chuncks/{}  >> $OUTPUT_FILE_NAME; echo 'done {}'"
+    ls chuncks | xargs -P 100 -I {} sh -c "./a.out ./chuncks/{}  >> $OUTPUT_FILE_NAME; echo 'done {}'"
     mv $OUTPUT_FILE_NAME $out
   '';
 }
