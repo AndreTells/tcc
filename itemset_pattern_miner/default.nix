@@ -30,6 +30,6 @@ pkgs.stdenv.mkDerivation {
 
   installPhase = ''
     mkdir $out
-    mv output.txt $out
+    mv $OUTPUT_FILE_NAME $out
   '';
 }
