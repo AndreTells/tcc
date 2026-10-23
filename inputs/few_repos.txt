@@ -1,5 +1,0 @@
-https://github.com/webui-dev/webui
-https://github.com/marella/ctransformers
-https://github.com/aceinnolab/inkycal
-https://github.com/id-software/quake
-https://github.com/waveshareteam/e-paper
