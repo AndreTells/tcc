@@ -24,7 +24,7 @@ with open(input_file) as f:
             curr_set = []
         curr_set.append(elements[-1].strip())
 
-itemsets, rules = apriori(data, min_support=0.003)
+itemsets, rules = apriori(data, min_support=0.01)
 for i in filter(lambda x: x>1,itemsets):
     for pattern in itemsets[i]:
         print(','.join(pattern))
