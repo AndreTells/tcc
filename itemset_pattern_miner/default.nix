@@ -21,10 +21,7 @@ pkgs.stdenv.mkDerivation {
   OUTPUT_FILE_NAME = "itemset_patterns.txt"; 
 
   buildPhase = ''
-    head $DATA -n 1 >> temp.csv
-    sort <( tail $DATA -n +2) | uniq >> temp.csv 
-    python3 itemset_pattern_miner.py temp.csv >> $OUTPUT_FILE_NAME
-    rm temp.csv
+    python3 itemset_pattern_miner.py $DATA >> $OUTPUT_FILE_NAME
   '';
 
 
