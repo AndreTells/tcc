@@ -17,11 +17,6 @@ def main():
 
     points = list((df.groupby(['Project', 'File', 'Caller']).agg({'Callee':list}))['Callee'])
 
-    points = filter(
-        lambda x:len(x)>1,
-        points
-    )
-
     points = list(map(
         lambda x: pad_vector(x, vector_size),
         points
