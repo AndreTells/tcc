@@ -5,6 +5,9 @@ let
   };
   pkgs = import nixpkgs {};
   glibc_functions_list = import ../list_glibc_functions/default.nix;
+  pythonenv = pkgs.python313.withPackages (ps: with ps; [
+    pandas
+  ]);
 in 
 pkgs.mkShell 
 {
@@ -14,6 +17,7 @@ pkgs.mkShell
       pkgs.clang 
       pkgs.lldb
       glibc_functions_list
+      pythonenv
   ];
 
   shellHook = ''

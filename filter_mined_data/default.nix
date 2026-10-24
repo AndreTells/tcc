@@ -5,6 +5,9 @@ let
   };
   pkgs = import nixpkgs {};
   glibc_functions_list = import ../list_glibc_functions/default.nix;
+  pythonenv = pkgs.python313.withPackages (ps: with ps; [
+    pandas
+  ]);
 in 
 pkgs.stdenv.mkDerivation {
   name="filter_mined_data_dev_shell";
@@ -15,6 +18,7 @@ pkgs.stdenv.mkDerivation {
     pkgs.clang-tools 
     pkgs.clang 
     glibc_functions_list
+    pythonenv
   ];
 
   # TODO swap test.txt for reference to module to generate .csv file
@@ -22,7 +26,7 @@ pkgs.stdenv.mkDerivation {
   CHUNCK_SIZE = 50;
 
   buildPhase = ''
-    clang++ src/main.cpp
+    clang++ src/glibc_function_filter.cpp -o glibc_function_filter.out
   '';
 
   installPhase = ''
@@ -34,9 +38,13 @@ pkgs.stdenv.mkDerivation {
     echo 'finished split'
     ls | xargs -P 100 -I {} sh -c "cat <(head ../test.txt -n 1) <(cat {}) > {}.csv; rm {}; echo 'formatted {}'"
     cd ..
-    touch $OUTPUT_FILE_NAME
-    head test.txt -n 1 >> $OUTPUT_FILE_NAME
-    ls chuncks | xargs -P 100 -I {} sh -c "./a.out ./chuncks/{}  >> $OUTPUT_FILE_NAME; echo 'done {}'"
-    mv $OUTPUT_FILE_NAME $out
+    head test.txt -n 1 >> temp.csv 
+    ls chuncks | xargs -P 100 -I {} sh -c "./glibc_function_filter.out ./chuncks/{}  >> temp.csv; echo 'done {}'"
+    head temp.csv -n 1 >> temp2.csv
+    sort <(tail -n +2 temp.csv) | uniq >> temp2.csv
+    rm temp.csv
+    python eliminate_singles.py temp2.csv 
+    rm temp2.csv
+    mv out.csv $out/$OUTPUT_FILE_NAME
   '';
 }
