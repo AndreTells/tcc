@@ -24,9 +24,11 @@ pkgs.stdenv.mkDerivation {
   buildPhase = ''
     head $DATA -n 1 >> temp.csv
     sort <( tail $DATA -n +2) | uniq >> temp.csv 
-    python main.py temp.csv >> base.arff
+    python format_input.py temp.csv >> base.arff
     rm temp.csv
-    java -jar $PAM -r 1 -f base.arff -o $OUTPUT_FILE_NAME
+    java -jar $PAM -r 1 -f base.arff -o out.txt
+    python format_output.py out.txt > $OUTPUT_FILE_NAME
+    rm out.txt
   '';
 
   installPhase = ''
