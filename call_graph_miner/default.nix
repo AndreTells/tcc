@@ -17,8 +17,6 @@ pkgs.stdenv.mkDerivation
     llvmPackages_latest.libclang
   ];
 
-  OUTPUT_FILE_NAME="glibc_functions.txt";
-
   buildPhase = ''
     clang++ src/main.cpp -lclang
   '';
