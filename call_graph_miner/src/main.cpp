@@ -1,33 +1,34 @@
 #include <string.h>
 #include <clang-c/Index.h>
 #include <iostream>
-#define PROJECT_FOLDER_OFFSET  9
 
 using namespace std;
-char file_name[500];
-char project_name[100000];
-char current_func[100000];
+char file_name[1000000];
+char project_name[1000000];
+char current_func[1000000];
 
 void set_file_vars(char* argv[]){
-  char* project_folders = strstr(argv[1],"projects");
+  int len = strlen(argv[2]);
+  char* project_folders = strstr(argv[1],argv[2]);
   if(project_folders == nullptr){
     cerr << "Failed to find projects folder" << endl;
     exit(-1);
   }
-  project_folders +=PROJECT_FOLDER_OFFSET;
 
-  strcpy(file_name,project_folders);
-  int i=0;
-  for(; project_folders[i]!='\0'; i++)
-    if(project_folders[i]=='/')
-      break;
-  strncpy(project_name,project_folders,i);
-  project_name[i] = '\0';
+  project_folders +=len+1;
+  int len_path = strlen(argv[1]);
+  char* temp = (char*)malloc(sizeof(char)*len_path);
+  strncpy(temp,project_folders,len_path);
 
+  char* project_name_temp = strtok(temp,"/");
+
+  strcpy(project_name,temp);
+  int project_name_len = strlen(project_name);
+  strcpy(file_name,temp+project_name_len+1);
 }
 
 int main(int argc, char* argv[]){
-  if(argc != 2){
+  if(argc != 3){
     cerr << "Incorrect number of command line arguments" << endl;
     return -1;
   }

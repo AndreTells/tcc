@@ -4,6 +4,7 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
+  repos = import ../repo_list_clone/default.nix;
 in 
 pkgs.stdenv.mkDerivation
 {
@@ -23,8 +24,7 @@ pkgs.stdenv.mkDerivation
   '';
 
   installPhase = ''
-    find ${pkgs.glibc.dev}/include -name '*\.h' | xargs -I {} ./a.out {} >> glibc_functions.txt
-    mkdir -p $out
-    mv ./$OUTPUT_FILE_NAME $out
+    find -L ${repos} -name '*.c' | xargs -I {} ./a.out {} ${repos} >> base.csv
+    mv base.csv $out
   '';
 }
