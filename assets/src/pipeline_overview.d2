@@ -13,15 +13,30 @@ glibc_miner: {
   label: Function Declaration Miner 
 }
 
+downloader: {
+  label: Repo Downloader
+}
+
+repo_list: {
+  label: Selected Repo Links
+}
+
+github_search: {
+  label: Search Github For Repos
+}
+
 miner: {
   label: Call Graph Miner
 }
 
 filter: {
-  label: Filter Graph to Only Glibc 
+  label: Pre processing 
 }
 
-github_repos -> miner
+github_search -> repo_list
+repo_list -> downloader
+github_repos -> downloader 
+downloader -> miner
 glibc -> glibc_miner 
 
 glibc_miner -> filter
@@ -42,6 +57,14 @@ container: Pattern Mining{
   }
 }
 
+evaluation: {
+  label: Evaluation 
+}
+
 filter -> container.itemset 
 filter -> container.clustering
 filter -> container.probabilistic_models
+
+container.itemset -> evaluation
+container.clustering -> evaluation
+container.probabilistic_models -> evaluation
