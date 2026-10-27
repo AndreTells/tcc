@@ -4,7 +4,9 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
-  data = ../repos.txt;
+  repos = import ../repos.nix {};
+  fetched_repos = builtins.map(repo: builtins.fetchGit{url=repo;}) repos ;
+  repo_paths = builtins.foldl' (acc: set: "ln -s "+set.outPath+"\n"+acc) "" fetched_repos;
 in 
 pkgs.stdenv.mkDerivation
 {
@@ -12,17 +14,8 @@ pkgs.stdenv.mkDerivation
   version="1.0";
   src=./.;
 
-  nativeBuildInputs = with pkgs; [
-    git
-  ];
-
   installPhase = ''
     mkdir -p $out
     cd $out
-    cat ${data} | xargs -I {} -P 100 git clone --depth 1 {}
-  '';
-
-  outputHashMode = "recursive";
-  outputHashAlgo = "sha256";
-  outputHash = "";
+  '' + repo_paths;
 }

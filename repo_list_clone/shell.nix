@@ -4,13 +4,12 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
-  data = ../repos.txt;
+  repos = import ../repos.nix {};
+  fetched_repos = builtins.map(repo: builtins.fetchGit{url=repo;}) repos ;
+  repo_paths = builtins.foldl' (acc: set: set.outPath+":"+acc) "" fetched_repos;
 in 
 pkgs.mkShellNoCC {
-  packages = with pkgs; [
-      git
-  ];
   shellHook = ''
-    export DATA=${data}
+    export REPOS=${repo_paths}
   '';
 }
