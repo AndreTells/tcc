@@ -17,7 +17,7 @@ pkgs.stdenv.mkDerivation
   ];
 
   buildPhase = ''
-    find src/ -name '*.d2' | xargs d2
+    find src/ -name '*.d2' | xargs -I {} d2 {}
   '';
 
   installPhase = ''
