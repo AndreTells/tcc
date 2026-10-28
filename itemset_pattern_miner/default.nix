@@ -17,16 +17,11 @@ pkgs.stdenv.mkDerivation {
   nativeBuildInputs = [ pythonWithPackages ];
   src=./.;
 
-  DATA=''${data}/${data.OUTPUT_FILE_NAME}'';
-  OUTPUT_FILE_NAME = "itemset_patterns.txt"; 
-
   buildPhase = ''
-    python3 itemset_pattern_miner.py $DATA >> $OUTPUT_FILE_NAME
+    python3 itemset_pattern_miner.py ${data} >> $out
   '';
 
 
   installPhase = ''
-    mkdir $out
-    mv $OUTPUT_FILE_NAME $out
   '';
 }

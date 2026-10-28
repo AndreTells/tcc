@@ -14,6 +14,6 @@ in
 pkgs.mkShellNoCC{
   packages = [ pythonWithPackages ];
   shellHook = ''
-    export DATA=${data}/${data.OUTPUT_FILE_NAME}
+    export DATA=${data}
   '';
 }
