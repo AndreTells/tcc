@@ -4,25 +4,22 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
-  repos = import ../repo_list_clone/default.nix;
+  base = ./base.csv;
+  function_extractor = import ./function_extractor.nix;
+  binPath = pkgs.lib.makeBinPath [ pkgs.coreutils];
 in 
-pkgs.stdenv.mkDerivation
+pkgs.writeTextFile
 {
   name="glibc_functions_list";
-  version="1.0";
-  src=./.;
-
-  nativeBuildInputs = with pkgs; [
-    clang 
-    llvmPackages_latest.libclang
-  ];
-
-  buildPhase = ''
-    clang++ src/main.cpp -lclang
+  executable=true;
+  text = ''
+    #!${pkgs.runtimeShell}
+    export PATH="${binPath}:$PATH"
+    rm out.csv
+    touch out.csv
+    chmod a+w out.csv
+    cat ${base} >> out.csv
+    find -L $1 -name '*.c' | xargs -P 100 -I {} sh -c "${function_extractor} {} $1 >> out.csv; echo 'done {}'"
   '';
 
-  installPhase = ''
-    find -L ${repos} -name '*.c' | xargs -I {} ./a.out {} ${repos} >> base.csv
-    mv base.csv $out
-  '';
 }
