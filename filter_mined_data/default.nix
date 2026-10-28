@@ -4,47 +4,35 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
+
+  binPath = pkgs.lib.makeBinPath [ pkgs.coreutils];
   glibc_functions_list = import ../list_glibc_functions/default.nix;
-  pythonenv = pkgs.python313.withPackages (ps: with ps; [
-    pandas
-  ]);
+  glibc_filter = import ./eliminate_singles.nix;
+  eliminate_singles = import ./eliminate_singles.nix;
+  CHUNCK_SIZE = "50";
 in 
-pkgs.stdenv.mkDerivation {
-  name="filter_mined_data_dev_shell";
-  version="0.1";
-  src=./.;
+pkgs.writeTextFile {
+  name="filter_mined_data";
+  version="1.0";
+  executable=true;
 
-  nativeBuildInputs = [
-    pkgs.clang-tools 
-    pkgs.clang 
-    glibc_functions_list
-    pythonenv
-  ];
-
-  # TODO swap test.txt for reference to module to generate .csv file
-  OUTPUT_FILE_NAME = "filtered_graph.csv";
-  CHUNCK_SIZE = 50;
-
-  buildPhase = ''
-    clang++ src/glibc_function_filter.cpp -o glibc_function_filter.out
-  '';
-
-  installPhase = ''
-    export GLIBC_FUNCTIONS_LIST_PATH=${glibc_functions_list}/${glibc_functions_list.OUTPUT_FILE_NAME}
-    mkdir -p $out
-    mkdir -p chuncks
-    cd chuncks
-    split -l $CHUNCK_SIZE <(tail -n +2 ../test.txt);
-    echo 'finished split'
-    ls | xargs -P 100 -I {} sh -c "cat <(head ../test.txt -n 1) <(cat {}) > {}.csv; rm {}; echo 'formatted {}'"
-    cd ..
-    head test.txt -n 1 >> temp.csv 
-    ls chuncks | xargs -P 100 -I {} sh -c "./glibc_function_filter.out ./chuncks/{}  >> temp.csv; echo 'done {}'"
-    head temp.csv -n 1 >> temp2.csv
-    sort <(tail -n +2 temp.csv) | uniq >> temp2.csv
-    rm temp.csv
-    python eliminate_singles.py temp2.csv 
-    rm temp2.csv
-    mv out.csv $out/$OUTPUT_FILE_NAME
+  text = ''
+    #!${pkgs.runtimeShell}
+    export PATH="${binPath}:$PATH";
+    export GLIBC_FUNCTIONS_LIST_PATH=${glibc_functions_list}/${glibc_functions_list.OUTPUT_FILE_NAME};
+    file_path=$(readlink -f $1)
+    mkdir -p chuncks;
+    cd chuncks;
+    split -l ${CHUNCK_SIZE} <(tail -n +2 $file_path);
+    echo 'finished split';
+    ls | xargs -P 100 -I {} sh -c "cat <(head $file_path -n 1) <(cat {}) > {}.csv; rm {}; echo 'formatted {}'";
+    cd ..;
+    head $file_path -n 1 >> temp.csv;
+    ls chuncks | xargs -P 100 -I {} sh -c "${glibc_filter} ./chuncks/{}  >> temp.csv; echo 'done {}'";
+    head temp.csv -n 1 >> temp2.csv;
+    sort <(tail -n +2 temp.csv) | uniq >> temp2.csv;
+    rm temp.csv;
+    ${eliminate_singles}/bin/eliminate_singles temp2.csv;
+    rm temp2.csv;
   '';
 }
