@@ -11,25 +11,27 @@ def extract_next_page_link(link: str)->str|None:
     return None 
 
 
-link = "https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A%3E%3D1000"
+def main():
+    link = "https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A%3E%3D1000"
 
-while True:
-    res = requests.get(link)
-    if(res.status_code == 429 or res.status_code == 403):
-        sleep(int(int(res.headers['x-ratelimit-reset']) - time())+1)
-        continue
+    while True:
+        res = requests.get(link)
+        if(res.status_code == 429 or res.status_code == 403):
+            sleep(int(int(res.headers['x-ratelimit-reset']) - time())+1)
+            continue
 
-    repo_links = map(
-        lambda x: x['url'],
-        res.json()['items']
-    )
+        repo_links = map(
+            lambda x: x['clone_url'],
+            res.json()['items']
+        )
 
-    for link in repo_links:
-        print(link)
+        for link in repo_links:
+            print(link)
 
-    if('Link' not in res.headers):
-        break
+        if('Link' not in res.headers):
+            break
 
-    link = extract_next_page_link(res.headers['Link'])
-    if(link is None):
-        break
+        link = extract_next_page_link(res.headers['Link'])
+        if(link is None):
+            break
+main()
