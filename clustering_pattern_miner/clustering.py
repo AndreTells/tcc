@@ -22,7 +22,7 @@ def main():
         points
     ))
 
-    km = KModes(n_clusters=20, init='Huang', n_init=4)
+    km = KModes(n_clusters=10, init='Huang', n_init=4)
 
     clusters = km.fit_predict(np.array(points))
     for cluster in km.cluster_centroids_:
