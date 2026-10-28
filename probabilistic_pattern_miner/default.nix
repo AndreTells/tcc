@@ -24,7 +24,7 @@ pkgs.stdenv.mkDerivation {
     sort <( tail ${data} -n +2) | uniq >> temp.csv 
     python format_input.py temp.csv >> base.arff
     rm temp.csv
-    java -jar $PAM -r 1 -f base.arff -o out.txt
+    java -jar $PAM -r 300 -f base.arff -o out.txt
     python format_output.py out.txt > $out
     rm out.txt
   '';
