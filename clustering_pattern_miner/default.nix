@@ -20,16 +20,13 @@ pkgs.stdenv.mkDerivation {
   nativeBuildInputs = [ pythonWithPackages ];
   src=./.;
 
-  DATA=''${data}/${data.OUTPUT_FILE_NAME}'';
   OUTPUT_FILE_NAME = "cluster"; 
 
   buildPhase = ''
-    python3 clustering.py $DATA >> $OUTPUT_FILE_NAME
+    python3 clustering.py ${data} >> $out
   '';
 
 
   installPhase = ''
-    mkdir $out
-    mv $OUTPUT_FILE_NAME $out
   '';
 }
