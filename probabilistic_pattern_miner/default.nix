@@ -17,22 +17,18 @@ pkgs.stdenv.mkDerivation {
   ];
   src=./.;
 
-  OUTPUT_FILE_NAME="probabilistic_patterns.txt";
-  DATA=''${data}/${data.OUTPUT_FILE_NAME}'';
   PAM=''${pam}/share/java/api-mining-1.0.jar'';
 
   buildPhase = ''
-    head $DATA -n 1 >> temp.csv
-    sort <( tail $DATA -n +2) | uniq >> temp.csv 
+    head ${data} -n 1 >> temp.csv
+    sort <( tail ${data} -n +2) | uniq >> temp.csv 
     python format_input.py temp.csv >> base.arff
     rm temp.csv
     java -jar $PAM -r 1 -f base.arff -o out.txt
-    python format_output.py out.txt > $OUTPUT_FILE_NAME
+    python format_output.py out.txt > $out
     rm out.txt
   '';
 
   installPhase = ''
-      mkdir $out
-      mv $OUTPUT_FILE_NAME $out
   '';
 }

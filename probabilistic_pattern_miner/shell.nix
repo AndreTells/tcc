@@ -14,7 +14,7 @@ pkgs.mkShellNoCC{
       pkgs.python3
   ];
   shellHook = ''
-    export DATA=${data}/${data.OUTPUT_FILE_NAME}
+    export DATA=${data}
     export PAM=${pam}/share/java/api-mining-1.0.jar
   '';
 }
