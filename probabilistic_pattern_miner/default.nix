@@ -4,31 +4,40 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
+  base = ./base.arff;
   pam = import ./pam_package/default.nix {};
-  data = import ../filter_mined_data/default.nix;
+  formatter = import ./formatter.nix;
+  binPath = pkgs.lib.makeBinPath [
+    pkgs.coreutils
+    pkgs.zulu
+  ];
 in 
-pkgs.stdenv.mkDerivation {
+let 
+  pam_jar=''${pam}/share/java/api-mining-1.0.jar'';
+  input_formatter = ''${formatter}/bin/format_input'';
+  output_formatter = ''${formatter}/bin/format_output'';
+in
+pkgs.writeTextFile {
   name="probabilistic_pattern_miner";
   version="1.0";
-  nativeBuildInputs = [ 
-      pkgs.python3
-      pkgs.zulu 
-      pam
-  ];
-  src=./.;
+  executable=true;
 
-  PAM=''${pam}/share/java/api-mining-1.0.jar'';
-
-  buildPhase = ''
-    head ${data} -n 1 >> temp.csv
-    sort <( tail ${data} -n +2) | uniq >> temp.csv 
-    python format_input.py temp.csv >> base.arff
-    rm temp.csv
-    java -jar $PAM -r 300 -f base.arff -o out.txt
-    python format_output.py out.txt > $out
-    rm out.txt
-  '';
-
-  installPhase = ''
+  text = ''
+    #!${pkgs.runtimeShell}
+    export PATH="${binPath}:$PATH"
+    head $1 -n 1 >> temp.csv;
+    rm in.arff;
+    rm temp.txt;
+    rm probabilistic_pattern_miner_patterns.txt;
+    sort <( tail $1 -n +2) | uniq >> temp.csv ;
+    touch in.arff;
+    chmod a+w in.arff;
+    cat ${base} >> in.arff;
+    ${input_formatter} temp.csv >> in.arff;
+    rm temp.csv;
+    java -jar ${pam_jar} -r 1 -f in.arff -o temp.txt;
+    rm in.arff;
+    ${output_formatter} temp.txt > probabilistic_pattern_miner_patterns.txt;
+    rm temp.txt;
   '';
 }

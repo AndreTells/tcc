@@ -32,8 +32,10 @@ def patterns(file_name:str):
                 ))
             )
 
-if(len(argv) != 2):
-    raise Exception("Incorrect number of command line arguments")
+def main():
+    if(len(argv) != 2):
+        raise Exception("Incorrect number of command line arguments")
 
-for pat in patterns(argv[1]):
-    print(','.join(pat.pattern))
+    for pat in patterns(argv[1]):
+        print(','.join(pat.pattern))
+main()
