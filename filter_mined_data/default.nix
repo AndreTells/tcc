@@ -7,9 +7,9 @@ let
 
   binPath = pkgs.lib.makeBinPath [ pkgs.coreutils];
   glibc_functions_list = import ../list_glibc_functions/default.nix;
-  glibc_filter = import ./eliminate_singles.nix;
+  glibc_filter = import ./glibc_filter.nix;
   eliminate_singles = import ./eliminate_singles.nix;
-  CHUNCK_SIZE = "50";
+  CHUNCK_SIZE = "100";
 in 
 pkgs.writeTextFile {
   name="filter_mined_data";
