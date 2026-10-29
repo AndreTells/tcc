@@ -29,6 +29,7 @@ pkgs.writeTextFile {
     cd ..;
     head $file_path -n 1 >> temp.csv;
     ls chuncks | xargs -P 100 -I {} sh -c "${glibc_filter} ./chuncks/{}  >> temp.csv; echo 'done {}'";
+    rm chuncks -r;
     head temp.csv -n 1 >> temp2.csv;
     sort <(tail -n +2 temp.csv) | uniq >> temp2.csv;
     rm temp.csv;
