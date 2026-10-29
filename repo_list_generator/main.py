@@ -11,7 +11,7 @@ def extract_next_page_link(link: str)->str|None:
     return None 
 
 
-def get_repos(num_stars:int=1000):
+def main(num_stars:int=1000):
     link = f"https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A%3E%3D{num_stars}"
 
     while True:
@@ -26,7 +26,7 @@ def get_repos(num_stars:int=1000):
         )
 
         for link in repo_links:
-            yield link
+            print(link)
 
         if('Link' not in res.headers):
             break
@@ -34,9 +34,5 @@ def get_repos(num_stars:int=1000):
         link = extract_next_page_link(res.headers['Link'])
         if(link is None):
             break
-def main():
-    print("{}:[")
-    for link in get_repos():
-        print(f'"{link}"')
-    print("]")
+
 main()
