@@ -25,17 +25,15 @@ pkgs.writeTextFile {
   text = ''
     #!${pkgs.runtimeShell}
     export PATH="${binPath}:$PATH"
-    head $1 -n 1 >> temp.csv;
-    rm in.arff;
-    rm temp.txt;
     rm probabilistic_pattern_miner_patterns.txt;
+    head $1 -n 1 >> temp.csv;
     sort <( tail $1 -n +2) | uniq >> temp.csv ;
     touch in.arff;
     chmod a+w in.arff;
     cat ${base} >> in.arff;
     ${input_formatter} temp.csv >> in.arff;
     rm temp.csv;
-    java -jar ${pam_jar} -r 1 -f in.arff -o temp.txt;
+    java -jar ${pam_jar} -r 120 -f in.arff -o temp.txt;
     rm in.arff;
     ${output_formatter} temp.txt > probabilistic_pattern_miner_patterns.txt;
     rm temp.txt;
