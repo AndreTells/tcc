@@ -8,25 +8,16 @@ in
 let 
   packageOverrides = pkgs.callPackage ./python-packages.nix { };
   python = pkgs.python313.override { inherit packageOverrides; };
-  pythonWithPackages = python.withPackages (ps: with ps; [ 
-    kmodes
-    pandas
-  ]);
-  data = import ../filter_mined_data/default.nix;
+  pythonpkgs = python.pkgs;
 in 
-pkgs.stdenv.mkDerivation {
+pythonpkgs.buildPythonPackage (finalAttrs: {
   name="clustering_pattern_miner";
   version="1.0";
-  nativeBuildInputs = [ pythonWithPackages ];
+  pyproject = true;
+  build-system = [ pythonpkgs.setuptools ];
+  dependencies = with pythonpkgs; [
+    kmodes
+    pandas
+  ];
   src=./.;
-
-  OUTPUT_FILE_NAME = "cluster"; 
-
-  buildPhase = ''
-    python3 clustering.py ${data} >> $out
-  '';
-
-
-  installPhase = ''
-  '';
-}
+})
