@@ -7,21 +7,16 @@ let
 in 
 let 
   packageOverrides = pkgs.callPackage ./python-packages.nix { };
-  python = pkgs.python3.override { inherit packageOverrides; };
-  pythonWithPackages = python.withPackages (ps: [ ps.efficient-apriori ]);
-  data = import ../filter_mined_data/default.nix;
+  python = pkgs.python313.override { inherit packageOverrides; };
+  pythonpkgs = python.pkgs;
 in 
-pkgs.stdenv.mkDerivation {
+pythonpkgs.buildPythonPackage (finalAttrs: {
   name="itemset_pattern_miner";
   version="1.0";
-  nativeBuildInputs = [ pythonWithPackages ];
+  pyproject = true;
+  build-system = [ pythonpkgs.setuptools ];
+  dependencies = with pythonpkgs; [
+      efficient-apriori
+  ];
   src=./.;
-
-  buildPhase = ''
-    python3 itemset_pattern_miner.py ${data} >> $out
-  '';
-
-
-  installPhase = ''
-  '';
-}
+})
