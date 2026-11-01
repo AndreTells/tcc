@@ -23,21 +23,36 @@ padrões de uso.
 Cada função transformada em uma transação e os itens nela contidos são as
 funções que esta chama. O identificador único das funções é seu nome acrecido do
 caminho até o arquivo que o contem e o nome do projeto no qual este arquivo se
-encontra.
+encontra. Dessa forma esta série de transação pode ser utilizada pelo algoritmo
+apriori mencionado anteriormente, encontrando regras de utilização que, no
+presente context, são os padrões de uso das funções.
 
 \subsubsection{Clustering}
 
+Cada função é considerada um ponto com uma conjunto de valores categóricos,
+nomes de funções da chamadas. A necessidade de um número fixo de valores por
+ponto pode ser suprida adicionando um valor que represente nulo aos pontos
+representando funções que chamem menos funções do que o número desejado. Tal
+transformação permite então a criação de uma lista de pontos com um número igual
+de variáveis categóricas, onde o algoritmo \textit{k modes} pode facilmente ser
+executado para buscar por clusters, ou seja, os padrões de uso das funções.
+
 \subsubsection{Modelo Probabilístico}
+
+Seguindo a implementação desenvolvida por \cite{probabilistic_api_miner}, as
+funções possíveis no conjunto de dados são vértices do grafo do modelo
+probabilístico. Dessa forma os padrões são os conjuntos mais prováveis pelo
+modelo probabilistico ajustado aos dados disponibilizados.
 
 \subsection{Mineração dos Padrões de Uso}
 
 % TODO: é necessário apresentar como a lista de repositórios foi obtida ?
 Todos os algoritmos apresentados nas seções anteriores são aplicados sobre o
 mesmo conjunto de dados, uma lista de projetos disponibilizados no Github
-contendo um número mínimo de contribuidores / avaliações afim de obter apenas
-códigos que tenham alguma garantia de qualidade. Antes da execução dos
-algoritmos, contudo, uma série de etapas de pré-processamento são realizadas,
-como é demonstrado na figura \ref{fig:pipeline_overview}.
+contendo no mínimo 1000 estrelas no GitHub, afim de obter apenas códigos que
+tenham alguma garantia de qualidade. Antes da execução dos algoritmos, contudo,
+uma série de etapas de pré-processamento são realizadas, como é demonstrado na
+figura \ref{fig:pipeline_overview}.
 
 %TODO: traduzir imagem
 \begin{figure}[h]
@@ -58,9 +73,12 @@ definidas na \textit{glibc}. Tal tarefa, como é visível na figura
 \ref{fig:pipeline_overview} é feita em paralelo a tarefa de minerar o grafo de
 chamadas.
 
-Uma vez que estes dois processos estão finalizados, os dados podem são então
-formatados para adequar-se a entrada esperada por cada um dos algoritmos
-utilizados.
+Adicionalmente, como funções que chamam apenas uma função não estabelecem nenhum
+padrão de uso, estas são filtradas do dataset sem nenhuma perda do que busca-se
+encontrar.
+
+Uma vez que estes processos finalizados, os dados podem são então formatados
+para adequar-se a entrada esperada por cada um dos algoritmos utilizados.
 
 \subsection{Comparação dos Resultados}
 %TODO: métodos estatisticos recomendados pelo professor
@@ -70,3 +88,5 @@ por outro.
 
 Média de \% do dataset inicial que cumpre o padrão supostamente detectado pelos
 algoritmos.
+
+tempo de execução (?)
