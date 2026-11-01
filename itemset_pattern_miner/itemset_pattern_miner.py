@@ -24,6 +24,7 @@ def main():
                 data.append(set(curr_set))
                 curr_set = []
             curr_set.append(elements[-1].strip())
+        data.append(set(curr_set))
 
     itemsets, rules = apriori(data, min_support=0.01)
     for i in filter(lambda x: x>1,itemsets):
