@@ -1,0 +1,16 @@
+\section{Análise}
+
+Em geral os padrões encontrados durante a análise são extremamente básicos,
+porém não incorretos. 
+
+Como mencionado no estudo sobre o método do modelo probabilístico
+\cite{probabilistic_api_miner}, o processo de configuração para este é mais
+simples e intuitivo do que as alternativas. No caso do método de mineração de
+regras de associação, a configuração via uma probabilidade mínima é difícil de
+ser regulado sem antes analisar o resultado para um dado valor. Já no método K
+modes, apesar de impor que o usuário saiba de antemão quantos  padrões deseja
+detectar, tem a vantagem de gerar um número fixo de resultados a serem
+analisados.
+
+Contudo um problema que afetou todos os métodos foi a sobre representação de
+padrões contendo apenas uma função nos resultados finais.
