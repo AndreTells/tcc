@@ -36,7 +36,32 @@ online em forums, relações entre os métodos, funções e variáveis utilizada
 desenvolvedores a fim de obter os anteriormente definidos padrões de uso.
 
 \subsection{Grafo de Chamadas}
-%TODO: adicionar descrição do que é uma grafo de chamadas
+Um grafo de chamadas trata-se de uma forma de verificar quais funções do código
+chamam quais outras funções. Fundamentalmente, se trata de um grafo orientado
+onde os vértices são funções, utilizadas ou criadas, um programa. Já as arestas
+representam qual função chama qual, no senso de: se A chama B, há uma aresta $A
+\rightarrow B$.
+
+Há duas formas principais de obter tal grafo: utilizando traços de execução do
+programa ou analisando o código fonte.
+
+O primeiro método envolve inserir uma lógica customizada no código fonte para
+registrar em um depósito externo quais funções o programa esta chamando enquanto
+está sendo executado. Tal método geralmente demanda um cuidado especial ao
+compilar o projeto e, obrigatoriamente, degrada a performance do projeto
+original.
+
+Já o segundo método envolve analisar o código fonte com técnicas de análise
+sintética. Tal permite ter acesso as funções que cada função chama diretamente
+do ponto de vista do programador. Contudo, esta forma de tratar o problema tem a
+clara desvantagem de, possivelmente, considerar caminhos de execução que nunca
+seriam tomados numa situação real. Adicionalmente, este é incapaz de obter
+sequências de chamadas de função indiretas, como poderia ser feito analisando
+traços de execução.
+
+Como em qualquer contexto que trata de grafos, há várias possibilidades para
+representar o presente tipo grafo. Porém, no caso do grafo de chamadas, o mais
+comum é a representação pela lista de adjacência.
 
 \subsection{Minerar Regras de Associação}
 Como descrito em \cite{minig_association_rules}, uma regra de associação pode
@@ -77,25 +102,17 @@ Porém métodos para outros tipos de dados também existem, como o algoritmo
 \textit{K modes}\cite{k_modes_article} capaz de encontrar clusters em dados
 categóricos.  
 
-<  breve descrição k modes
-
-% TODO: necessário comentar mais sobre as diferenças entre configurações de
-% algorítmos
+Métodos de clustering frequentemente demandam que a quantidade de clusters seja
+especificada de antemão. Existem várias heurísticas de como decidir tal valor,
+como o método do cotovelo\cite{elbow}, porém em geral não é um problema
+solucionável.
 
 \subsection{Modelos Probabilísticos}
-%Maximização de Expectativas
 Como definido em
-\cite{maximum_likelihood_from_incomplete_data_via_the_em_algorithm.pdf}, modelos
-probabilísticos buscam maximizar a probabilidade de que um conjunto de dados
-corresponda corresponda ao dado conjunto proposto pelo modelo.
+\cite{maximum_likelihood_from_incomplete_data_via_the_em_algorithm}, modelos
+probabilísticos buscam maximizar a probabilidade do conjunto de dados analisados
+segundo seu o modelo que está sendo ajustado. Tal conceito foi expandido através
+de processos para ajustar redes Bayesianas\cite{bayesian_network}, onde cada nó
+do grafo representa uma variável aleatória e as arestas permitem calcular a
+distribuição de probabilidade conjunto das várias variáveis ligadas entre si.
 
-\subsubsection{Rede Bayesiana}
-
-Redes Bayesianas buscam modelizar a relação entre diferentes variáveis com um
-grafo acíclico utilizando princípios de probabilidade condicional para indicar a
-distribuição dos possíveis valores que uma dada variável pode assumir.
-% TODO achar referencia para redes Bayesianas
-
-Uma forma proposta de estimar tais tipos de redes é atrvés do algorítmo de
-"Bayesian Structural EM algorithm",baseado no algorítmo de maximização de
-expectativas (EM) anteriormente descrito
