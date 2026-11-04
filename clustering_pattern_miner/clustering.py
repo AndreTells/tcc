@@ -22,10 +22,25 @@ def main():
         points
     ))
 
-    km = KModes(n_clusters=10, init='Huang', n_init=4)
+    k = 1
+    model = KModes(n_clusters=k, init='Huang', n_init=4)
+    model.fit_predict(np.array(points))
+    prev_cost = model.cost_
 
-    clusters = km.fit_predict(np.array(points))
-    for cluster in km.cluster_centroids_:
+    while True:
+        k= k+1
+        model_ = KModes(n_clusters=k, init='Huang', n_init=4)
+        model_.fit_predict(np.array(points))
+        new_cost = model_.cost_
+
+        if( new_cost > prev_cost * 0.999):
+            break
+
+        model = model_
+        prev_cost = new_cost
+
+
+    for cluster in model.cluster_centroids_:
         cluester_funcs = filter(
             lambda x: x!='None',
             cluster
