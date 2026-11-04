@@ -12,11 +12,7 @@ let
     kmodes
     pandas
   ]);
-  data = import ../filter_mined_data/default.nix;
 in 
 pkgs.mkShellNoCC {
   packages = [ pythonWithPackages ];
-  shellHook = ''
-    export DATA=${data}
-  '';
 }
