@@ -10,7 +10,7 @@ let
 in 
 pkgs.writeTextFile
 {
-  name="glibc_functions_list";
+  name="call_graph_miner";
   executable=true;
   text = ''
     #!${pkgs.runtimeShell}
