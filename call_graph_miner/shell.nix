@@ -4,7 +4,6 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
-  repos = import ../repo_list_clone/default.nix;
 in 
 pkgs.mkShell
 {
@@ -14,8 +13,4 @@ pkgs.mkShell
       clang 
       llvmPackages_latest.libclang
     ];
-
-  shellHook = ''
-    export REPOS=${repos}
-  '';
 }
