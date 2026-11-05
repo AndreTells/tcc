@@ -53,10 +53,12 @@ pkgs.writeTextFile
     if [[ -n "$out_file" ]]; then
       cat ${base} >> $out_file
       command="${function_extractor} {} $in_file >> $out_file; echo 'done {}'"
-      find -L $in_file -name '*.c' | xargs -P 100 -I {} sh -c "$command"
     else 
-      echo "no out file"
+      cat ${base}
+      command="${function_extractor} {} $in_file"
     fi
+
+    find -L $in_file -name '*.c' | xargs -P 100 -I {} sh -c "$command"
   '';
 
 }
