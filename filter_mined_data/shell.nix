@@ -21,6 +21,6 @@ pkgs.mkShell
   ];
 
   shellHook = ''
-    export GLIBC_FUNCTIONS_LIST_PATH=${glibc_functions_list}/${glibc_functions_list.OUTPUT_FILE_NAME}
+    export GLIBC_FUNCTIONS_LIST_PATH=${glibc_functions_list} 
   '';
 }
