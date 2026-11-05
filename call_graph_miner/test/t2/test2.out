@@ -1,0 +1,4 @@
+t2,test2.c,func1,a
+t2,test2.c,func1,b
+t2,test2.c,main,func1
+t2,test2.c,main,a
