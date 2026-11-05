@@ -27,6 +27,9 @@ pkgs.writeTextFile
           elif [[ -n $2 ]]; then 
             out_file="$2";
             shift;
+          else 
+            echo "no output file specified";
+            exit 1;
           fi
           ;;
         -i)
