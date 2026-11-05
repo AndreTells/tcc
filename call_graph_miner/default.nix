@@ -15,11 +15,48 @@ pkgs.writeTextFile
   text = ''
     #!${pkgs.runtimeShell}
     export PATH="${binPath}:$PATH"
-    rm out.csv
-    touch out.csv
-    chmod a+w out.csv
-    cat ${base} >> out.csv
-    find -L $1 -name '*.c' | xargs -P 100 -I {} sh -c "${function_extractor} {} $1 >> out.csv; echo 'done {}'"
+
+    in_file=
+    out_file=
+    while :; do
+      case $1 in 
+        -o) 
+          if [[ -f $2 ]]; then
+            echo "file already exists";
+            exit 1;
+          elif [[ -n $2 ]]; then 
+            out_file="$2";
+            shift;
+          fi
+          ;;
+        -i)
+          if [[ -d $2 ]]; then
+            in_file="$2";
+            shift;
+          else 
+            echo "input is a file not directory";
+            exit 1;
+          fi
+          ;;
+        *)
+          break
+        ;;
+      esac
+      shift
+    done
+
+    if [[ -z $in_file ]]; then 
+      echo "no input folder";
+      exit 1;
+    fi 
+
+    if [[ -n "$out_file" ]]; then
+      cat ${base} >> $out_file
+      command="${function_extractor} {} $in_file >> $out_file; echo 'done {}'"
+      find -L $in_file -name '*.c' | xargs -P 100 -I {} sh -c "$command"
+    else 
+      echo "no out file"
+    fi
   '';
 
 }
