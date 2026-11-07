@@ -16,11 +16,10 @@ pkgs.mkShell
       pkgs.clang-tools 
       pkgs.clang 
       pkgs.lldb
-      glibc_functions_list
       pythonenv
   ];
 
   shellHook = ''
-    export GLIBC_FUNCTIONS_LIST_PATH=${glibc_functions_list} 
+    export GLIBC_FUNCTIONS_LIST_PATH="${glibc_functions_list}"
   '';
 }
