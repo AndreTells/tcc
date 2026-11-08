@@ -1,12 +1,8 @@
-\section{Metodologia}
+\section{Metodologia[estável]}
 \subsection{Objetivo}
-O presente estudo busca realizar uma comparação qualitativa e quantitativa entre
-diferentes métodos para minerar padrões de uso de APIs da \textit{glibc} a fim
-de proporcionar uma visão das vantagens e desvantagem de cada forma de
-solucionar o problema. Busca-se também disponibilizar publicamente um catálogo
-de padrões de uso no domínio para uso posteriormente em outros estudos. 
-
-Em específico serão avaliados os métodos de:
+O presente estudo busca realizar uma comparação entre diferentes métodos para
+minerar padrões de uso de APIs da \textit{glibc}. Em específico serão avaliados
+os métodos de:
 
 \begin{itemize}
   \item aprendizado de regras de associação
@@ -14,47 +10,33 @@ Em específico serão avaliados os métodos de:
   \item modelo probabilístico
 \end{itemize}
 
-A seguir é especificado como tais são aplicados ao problema de mineração de
-padrões de uso.
+Dá-se especial atenção a métricas quantitativas, que serão descritas em mais
+detalhes posteriormente durante a seção \ref{sec:evaluation}. Através destas o
+presente estudo responde a pergunta: de que formas cada um dos métodos se
+assemelham segundo estas métricas. Aliado a tal, busca-se também obter
+informações comuns aos resultados de todos métodos que possam dar indícios da
+natureza de padrões de uso em geral.
 
-\subsubsection{Aprendizado de Regras de Associação}
-
-Cada função transformada em uma transação e os itens nela contidos são as
-funções que esta chama. O identificador único das funções é seu nome acrecido do
-caminho até o arquivo que o contem e o nome do projeto no qual este arquivo se
-encontra. Dessa forma esta série de transação pode ser utilizada pelo algoritmo
-apriori mencionado anteriormente, encontrando regras de utilização que, no
-presente context, são os padrões de uso das funções.
-
-\subsubsection{Clustering}
-
-Cada função é considerada um ponto com uma conjunto de valores categóricos,
-nomes de funções da chamadas. A necessidade de um número fixo de valores por
-ponto pode ser suprida adicionando um valor que represente nulo aos pontos
-representando funções que chamem menos funções do que o número desejado. Tal
-transformação permite então a criação de uma lista de pontos com um número igual
-de variáveis categóricas, onde o algoritmo \textit{k modes} pode facilmente ser
-executado para buscar por clusters, ou seja, os padrões de uso das funções.
-
-\subsubsection{Modelo Probabilístico}
-
-Seguindo a implementação desenvolvida por \cite{probabilistic_api_miner}, as
-funções possíveis no conjunto de dados são vértices do grafo do modelo
-probabilístico. Dessa forma os padrões são os conjuntos mais prováveis pelo
-modelo probabilístico ajustado aos dados disponibilizados.
+Busca-se também disponibilizar publicamente um catálogo de padrões de uso da
+\textit{glibc}. Entende-se que, se um mesmo padrão é detectado por vários
+métodos distintos, este é provavelmente um verdadeiro padrão de uso. Neste
+contexto busca-se determinar dois conjuntos de padrões detectados:
+\begin{itemize}
+  \item prováveis padrões de uso: padrões detectados por todos os três métodos
+  \item candidatos a prováveis padrões de uso: padrões detectados por dois métodos
+\end{itemize}
 
 \subsection{Mineração dos Padrões de Uso}
 
-% TODO: é necessário apresentar como a lista de repositórios foi obtida ? -> sim
-Todos os algoritmos apresentados nas seções anteriores são aplicados sobre o
-mesmo conjunto de dados, uma lista de projetos disponibilizados no Github.
-A fim de obter apenas projetos com um certo nível de qualidade, foi utilizado um
-subconjunto do resultado desenvolvido por \cite{repo_list}, filtrando para obter
-apenas repositórios utilizando código em C e que sejam, segundo a definição do
-artigo citado, considerados 'projetos de software planejados' e 'úteis'.
-Adicionalmente, para controlar o escopo do presente estudo e evitar forks de um
-mesmo código base no dataset já mencionado, considerou-se apenas projetos com no
-mínimo 100 estrelas.
+Todos os algoritmos apresentados as seção anterior são aplicados sobre o mesmo
+conjunto de dados, uma lista de projetos em C disponibilizados no Github. A fim
+de obter apenas projetos com um certo nível de qualidade, foi utilizado um
+subconjunto do resultado desenvolvido por Nuthan Munaiah et. all
+\cite{repo_list}, filtrando para obter apenas repositórios utilizando código em
+C e que sejam, segundo a definição do artigo citado, considerados 'projetos de
+software planejados' e 'úteis'. Adicionalmente, para controlar o escopo do
+presente estudo e evitar forks de um mesmo código base no dataset já mencionado,
+considerou-se apenas projetos com no mínimo 100 estrelas.
 
 %TODO: traduzir imagem
 \begin{figure}[h]
@@ -64,43 +46,74 @@ mínimo 100 estrelas.
 \end{figure}
 
 %TODO: adicionar referências a ids de blocos na imagem
-A partir dos arquivos fontes escritos em na linguagem C nos projetos
-selecionados, um grafo de chamadas é extraído para as análises. Para este
-processo são considerados apenas arquivos que não utilizam diretivas de
-pré-processamento condicionais. 
+A partir dos arquivos fontes escritos na linguagem C nos projetos selecionados,
+um grafo de chamadas é extraído para as análises. Para este processo são
+considerados apenas arquivos que não utilizam diretivas de pré-processamento
+condicionais. 
 
 Tal escolha se da a fim de evitar possíveis dificuldades de determinar padrões
-válidos nestes casos. Como o caminho de execução real a levar em conta para
-detectar padrões de uso nestes casos.
+válidos nestes casos. Como é difícil determinar o caminho de execução correto a
+levar em conta para detectar padrões de uso nestes casos, escolhe-se ignorar
+estes.
 
 A fim de limitar o escopo do dataset resultante a apenas o escopo do presente
-estudo, apenas a chamadas de funções da \textit{glibc} são levadas em conta.
-Assim, o grafo de chamadas minerado dos arquivos é filtrado para se adequar a
-tal.
+estudo, somente chamadas de funções da \textit{glibc} são levadas em conta. A
+lista de funções contidas na biblioteca é extraída analisando diretamente os
+arquivos \textit{header} da mesma.
 
-Para realizar tal redução faz-se necessário obter uma lista das funções
-definidas na \textit{glibc}. Tal tarefa, como é visível na figura
-\ref{fig:pipeline_overview} é feita em paralelo a tarefa de minerar o grafo de
-chamadas.
+Adicionalmente, para restringir ainda mais o dataset final, são descartadas
+neste ponto funções que chamam apenas uma outra função. Estes usos, apesar de
+reais, não estabelecem nenhum padrão de uso. Dessa forma, ignorar estas durante
+a busca por padrões não surte nenhum efeito no resultado final.
 
-Adicionalmente, como funções que chamam apenas uma função não estabelecem nenhum
-padrão de uso, estas são filtradas do dataset sem nenhuma perda do que busca-se
-encontrar.
+Ambas estas tarefas são realizadas antes de aplicar os algoritmos a fim de
+economizar tempo de processamento. Aplicar tais filtros após a utilização dos
+algoritmos não teria impacto no resultado. Como no presente estudo a
+complexidade de tempo do processo de filtrar os arquivos é inferior a dos
+algoritmos, é preferível que tal seja feito antes.
 
-Ambas estas tarefas são realizadas antes de aplicar os algoritmos a fim
-de economizar tempo de processamento. Aplicar tais filtros após a utilização dos
-algoritmos não teria impacto no resultado e implicaria processar dados
-desnecessariamente. Como no presente estudo a complexidade de tempo do processo
-de filtrar os arquivos é inferior a dos algoritmos, é preferível que tal seja
-feito antes.
+Uma vez que esta etapa de pré-processamento está finalizada, os dados são formatados para
+adequar-se a entrada esperada por cada um dos algoritmos utilizados. A seguir é
+especificado como tais são aplicados ao problema de mineração de padrões de uso.
 
-Uma vez que estes processos finalizados, os dados podem são formatados para
-adequar-se a entrada esperada por cada um dos algoritmos utilizados.
+\subsubsection{Aprendizado de Regras de Associação}
 
-\subsection{Processo para Avaliação}
-A avaliação dos resultados se da em duas etapas, uma individual para cada método
-outra para comparando os resultados entre métodos.
+Métodos baseados em mineração de padrões de bancos de dados de transações são
+communs \cite{up_miner} \cite{cminer} \cite{groums}, sendo quase o método padrão
+para encontrar padrões neste contexto. Cada função é considerada uma transação e
+os itens nela contidos são as funções que esta chama. O identificador único das
+funções é seu nome acrecido do caminho até o arquivo que o contem e o nome do
+projeto no qual este arquivo se encontra. Dessa forma esta série de transação
+pode ser utilizada pelo algoritmo apriori\cite{minig_association_rules}
+mencionado anteriormente, encontrando regras de utilização que, no presente
+context, são os padrões de uso das funções.
 
+\subsubsection{Clustering}
+
+Como utilizado em vários algoritmos da literatura\cite{mapo} \cite{groums}
+ \cite{oop_pattern_mining}, clustering é utilizado como
+uma etapa para diminuir a quantidade final de resultados e diminuir padrões
+repetidos. Cada função é considerada um ponto com uma conjunto de valores
+categóricos, nomes de funções da chamadas. A necessidade de um número fixo de
+valores por ponto pode ser suprida adicionando um valor que represente nulo aos
+pontos representando funções que chamem menos funções do que o número desejado.
+Tal transformação permite então a criação de uma lista de pontos com um número
+igual de variáveis categóricas, onde o algoritmo \textit{k modes} pode
+facilmente ser executado para buscar por clusters, ou seja, os padrões de uso
+das funções.
+
+\subsubsection{Modelo Probabilístico}
+
+Seguindo a implementação desenvolvida por \cite{probabilistic_api_miner}, as
+funções possíveis no conjunto de dados são vértices do grafo do modelo
+probabilístico. Dessa forma os padrões são os conjuntos mais prováveis pelo
+modelo probabilístico ajustado aos dados disponibilizados.
+
+\subsection{Processo para Avaliação} \label{sec:evaluation}
+A avaliação dos resultados se da em duas etapas: uma individual para cada método
+e outra comparando os resultados entre métodos.
+
+\subsubsection{Avaliação Individual}
 A primeira etapa envolve calcular estatísticas descritivas sobre os padrões
 encontrados por cada um dos algoritmos:
 \begin{itemize}
@@ -131,13 +144,11 @@ encontrados por cada um dos algoritmos:
 Considera-se neste contexto "utilização de um padrão de uso" como uma função que
 chame todos as funções dentro de um dado padrão de uso.
 
-Para comparar a consistência dos resultados entre os métodos, uma série de
-testes entre métodos são empregados. O índice de Jacquard\cite{jaccard},
-indicando o grau de similaridade par a par entre os resultados obtidos por cada
-um dos métodos.
-
-Para comparar o resultados dos três métodos em conjunto, emprega-se uma
-generalização do indice de Jacquard para três conjuntos:
+\subsubsection{Avaliação Comparativa}
+O índice de Jacquard\cite{jaccard}, indicando o grau de similaridade par a par
+entre conjuntos, é utilizado para comparar os padrões encontrados pelas três
+técnicas. Já para comparar o resultados dos três métodos em conjunto, emprega-se
+uma generalização do indice de Jacquard para três conjuntos:
 
 \begin{equation}
   {|A \cap B \cap C|} \div {| A \cup B \cup C|}
@@ -146,5 +157,6 @@ generalização do indice de Jacquard para três conjuntos:
 Onde A, B e C representam os 3 conjuntos distintos de padrões de uso encontrados
 com os algoritmos.
 
-Adicionalmente, são apresentados os padrões detectados por mais de um dos
-métodos.
+Além disso, como mencionado anteriormente, são apresentados os padrões
+detectados por duas técnicas padrões mas não todas e os padrões detectados por
+todas as técnicas testadas.
