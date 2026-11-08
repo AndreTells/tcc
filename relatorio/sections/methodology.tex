@@ -47,11 +47,14 @@ modelo probabilístico ajustado aos dados disponibilizados.
 
 % TODO: é necessário apresentar como a lista de repositórios foi obtida ? -> sim
 Todos os algoritmos apresentados nas seções anteriores são aplicados sobre o
-mesmo conjunto de dados, uma lista de projetos disponibilizados no Github
-contendo no mínimo 1000 estrelas no GitHub, afim de obter apenas códigos que
-tenham alguma garantia de qualidade. Antes da execução dos algoritmos, contudo,
-uma série de etapas de pré-processamento são realizadas, como é demonstrado na
-figura \ref{fig:pipeline_overview}.
+mesmo conjunto de dados, uma lista de projetos disponibilizados no Github.
+A fim de obter apenas projetos com um certo nível de qualidade, foi utilizado um
+subconjunto do resultado desenvolvido por \cite{repo_list}, filtrando para obter
+apenas repositórios utilizando código em C e que sejam, segundo a definição do
+artigo citado, considerados 'projetos de software planejados' e 'úteis'.
+Adicionalmente, para controlar o escopo do presente estudo e evitar forks de um
+mesmo código base no dataset já mencionado, considerou-se apenas projetos com no
+mínimo 100 estrelas.
 
 %TODO: traduzir imagem
 \begin{figure}[h]
@@ -60,14 +63,22 @@ figura \ref{fig:pipeline_overview}.
   \label{fig:pipeline_overview}
 \end{figure}
 
-%TODO: mencionar que apenas funções chamadas diretamente são consideradas
+%TODO: adicionar referências a ids de blocos na imagem
 A partir dos arquivos fontes escritos em na linguagem C nos projetos
-selecionados, um grafo de chamadas é extraído para as análises. A fim de limitar
-o escopo de tal dataset a apenas o escopo do presente estudo, apenas a chamadas
-de funções da \textit{glibc} são levadas em conta. Assim, o grafo de chamadas
-minerado dos arquivos é filtrado para se adequar a tal.
+selecionados, um grafo de chamadas é extraído para as análises. Para este
+processo são considerados apenas arquivos que não utilizam diretivas de
+pré-processamento condicionais. 
 
-Porém, para realizar tal redução, faz-se necessário obter uma lista das funções
+Tal escolha se da a fim de evitar possíveis dificuldades de determinar padrões
+válidos nestes casos. Como o caminho de execução real a levar em conta para
+detectar padrões de uso nestes casos.
+
+A fim de limitar o escopo do dataset resultante a apenas o escopo do presente
+estudo, apenas a chamadas de funções da \textit{glibc} são levadas em conta.
+Assim, o grafo de chamadas minerado dos arquivos é filtrado para se adequar a
+tal.
+
+Para realizar tal redução faz-se necessário obter uma lista das funções
 definidas na \textit{glibc}. Tal tarefa, como é visível na figura
 \ref{fig:pipeline_overview} é feita em paralelo a tarefa de minerar o grafo de
 chamadas.
@@ -79,11 +90,12 @@ encontrar.
 Ambas estas tarefas são realizadas antes de aplicar os algoritmos a fim
 de economizar tempo de processamento. Aplicar tais filtros após a utilização dos
 algoritmos não teria impacto no resultado e implicaria processar dados
-desnecessariamente. Adicionalmente, a complexidade de tempo para filtrar os
-dados é inferior a complexidade de tempo dos algoritmos utilizados.
+desnecessariamente. Como no presente estudo a complexidade de tempo do processo
+de filtrar os arquivos é inferior a dos algoritmos, é preferível que tal seja
+feito antes.
 
-Uma vez que estes processos finalizados, os dados podem são então formatados
-para adequar-se a entrada esperada por cada um dos algoritmos utilizados.
+Uma vez que estes processos finalizados, os dados podem são formatados para
+adequar-se a entrada esperada por cada um dos algoritmos utilizados.
 
 \subsection{Processo para Avaliação}
 A avaliação dos resultados se da em duas etapas, uma individual para cada método
@@ -93,19 +105,46 @@ A primeira etapa envolve calcular estatísticas descritivas sobre os padrões
 encontrados por cada um dos algoritmos:
 \begin{itemize}
   \item qual a função mais comum nos padrões detectados
-  \item maior \% de utilização de um padrão de uso
-  \item \% média de utilização dos padrões de uso
-  \item menor \% de utilização de um padrão de uso
-  \item desvio padrão \% de utilização de um padrão de uso
+  \item maior \% de utilização de um padrão de uso por arquivo
+  \item \% média de utilização dos padrões de uso por arquivo
+  \item \% mediana de utilização dos padrões de uso por arquivo
+  \item menor \% de utilização de um padrão de uso por arquivo
+  \item desvio padrão \% de utilização de um padrão de uso por arquivo
+  \item padrão de uso com maior \% de utilização por arquivo
+  \item padrão de uso com menor \% de utilização por arquivo
+  \item maior \% de utilização de um padrão de uso por projeto
+  \item \% média de utilização dos padrões de uso por projeto
+  \item \% mediana de utilização dos padrões de uso por projeto
+  \item menor \% de utilização de um padrão de uso por projeto
+  \item desvio padrão \% de utilização de um padrão de uso por projeto
+  \item padrão de uso com maior \% de utilização por projeto
+  \item padrão de uso com menor \% de utilização por projeto
   \item maior tamanho de padrão de uso
   \item tamanho médio dos padrões de uso
+  \item tamanho mediano dos padrões de uso
   \item menor tamanho de padrão de uso
   \item desvio padrão do tamanho de padrão de uso
+  \item maior padrão de uso detectado
+  \item menor padrão de uso detectado
   \item número de padrões detectados
 \end{itemize}
 Considera-se neste contexto "utilização de um padrão de uso" como uma função que
 chame todos as funções dentro de um dado padrão de uso.
 
-Para comparar a consistência dos resultados entre os métodos é empregado o
-índice de Jacquard\cite{jaccard}, indicando o grau de similaridade entre os
-resultados obtidos para cada um dos métodos.
+Para comparar a consistência dos resultados entre os métodos, uma série de
+testes entre métodos são empregados. O índice de Jacquard\cite{jaccard},
+indicando o grau de similaridade par a par entre os resultados obtidos por cada
+um dos métodos.
+
+Para comparar o resultados dos três métodos em conjunto, emprega-se uma
+generalização do indice de Jacquard para três conjuntos:
+
+\begin{equation}
+  {|A \cap B \cap C|} \div {| A \cup B \cup C|}
+\end{equation}
+
+Onde A, B e C representam os 3 conjuntos distintos de padrões de uso encontrados
+com os algoritmos.
+
+Adicionalmente, são apresentados os padrões detectados por mais de um dos
+métodos.

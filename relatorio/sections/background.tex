@@ -1,10 +1,14 @@
-\section{Background}
+\section{Background[estável]}
 \subsection{API}
-Se entende neste texto por API, sigla inglesa para \textit{application
-programming interface} como: uma interface que defina nome, entrada e saída de
-procedimentos que se referem direta ou indiretamente a uma sequência de
-instruções a serem executadas pelo computador.
-% preciso de uma citação(?)
+Como apontado por vários outros autores\cite{api_property_inference}
+\cite{analyzing_temporal_api_usage_patterns}
+\cite{recommender_system_software_engineering_nearest_neighbours}
+\cite{probabilistic_api_miner}
+\cite{google_oracle}, se entende
+neste texto por API, sigla inglesa para \textit{application programming
+interface}, uma: interface que defina nome, entrada e saída de procedimentos
+que se referem direta ou indiretamente a uma sequência de instruções a serem
+executadas pelo computador.
 
 É considerado também que tal é normalmente disponibilizado por um grupo com o
 intuito de que estes mecanismos sejam utilizados por outros grupos de
@@ -12,38 +16,37 @@ desenvolvedores com comunicação relativamente mínima entre todas as partes. O
 objetivo principal de tal prática é facilitar o desenvolvimento de software em
 contextos / áreas de conhecimento específicas.
 
-Como apontado por\cite{api_property_inference} frequentemente o uso de uma api
-pode se resumira uma simples chamada de função, como definido acima, porém
-também demanda de seus usuários que uma lógica interna seja seguida para que o
-funcionamento seja o esperado pelo usuário da API em questão.
-
 \subsection{Padrões de Uso}
 Um padrão de uso na área tem uma definição vaga, variando ligeiramente entre
-autores diferentes. Seguindo o proposto em \cite{api_property_inference}, um
-padrão de uso é uma forma comum de se utilizar uma API. Utilizando a mesma
-fonte, tais padrões podem ser sub categorizados especificamente em padrões de
-uso ordenados e não ordenados. No caso dos primeiros, o padrão indica a ordem na
-qual as funções são chamadas quando utilizadas em conjunto, enquanto no segundo
-caso não há tal restrição.
+autores diferentes. Seguindo o proposto por Martin P. Robillard et.
+all\cite{api_property_inference}, um padrão de uso é uma forma comum de se
+utilizar uma API. Utilizando a mesma fonte, tais padrões podem ser sub
+categorizados especificamente em padrões de uso ordenados e não ordenados. No
+caso dos primeiros, o padrão indica a ordem na qual as funções são chamadas
+quando utilizadas em conjunto, enquanto no segundo caso não há tal restrição.
 
 \subsection{Mineração de Padrões de Uso}
 
-Definição geral do problema Como definidos em textos da
-literatura\cite{analyzing_temporal_api_usage_patterns}\cite{api_property_inference},
-o processo de mineração de padrões de uso se trata de encontrar em uma base de
+Como definidos em textos da literatura
+\cite{analyzing_temporal_api_usage_patterns} \cite{api_property_inference}
+\cite{probabilistic_api_miner}
+\cite{recommender_system_software_engineering_nearest_neighbours}
+\cite{pattern_from_lib_code} \cite{comp_mining_source_code}, o
+processo de mineração de padrões de uso se trata de encontrar em uma base de
 dados, de seja códigos fonte, documentações ou mesmo trechos de códigos postados
 online em forums, relações entre os métodos, funções e variáveis utilizadas por
 desenvolvedores a fim de obter os anteriormente definidos padrões de uso.
 
 \subsection{Grafo de Chamadas}
-Um grafo de chamadas trata-se de uma forma de verificar quais funções do código
-chamam quais outras funções. Fundamentalmente, se trata de um grafo orientado
-onde os vértices são funções, utilizadas ou criadas, um programa. Já as arestas
-representam qual função chama qual, no senso de: se A chama B, há uma aresta $A
-\rightarrow B$.
+Um grafo de chamadas \cite{call_graph_algos} \cite{dragon_book}
+\cite{call_graph_analysis} trata-se de uma forma de verificar quais funções do
+código chamam quais outras funções. Fundamentalmente, se trata de um grafo
+orientado onde os vértices são funções, utilizadas ou criadas, por um programa.
+Já as arestas representam qual função chama qual, no senso de: se A chama B, há
+uma aresta $A \rightarrow B$.
 
 Há duas formas principais de obter tal grafo: utilizando traços de execução do
-programa ou analisando o código fonte.
+programa \cite{dragon_book} ou analisando o código fonte \cite{call_graph_analysis}.
 
 O primeiro método envolve inserir uma lógica customizada no código fonte para
 registrar em um depósito externo quais funções o programa esta chamando enquanto
@@ -60,8 +63,7 @@ sequências de chamadas de função indiretas, como poderia ser feito analisando
 traços de execução.
 
 Como em qualquer contexto que trata de grafos, há várias possibilidades para
-representar o presente tipo grafo. Porém, no caso do grafo de chamadas, o mais
-comum é a representação pela lista de adjacência.
+representar o presente tipo grafo.
 
 \subsection{Minerar Regras de Associação}
 Como descrito em \cite{minig_association_rules}, uma regra de associação pode
@@ -93,8 +95,8 @@ métricas como o centro dos clusters detectados.
 
 Existem várias técnicas para a obtenção de tais clusters em diferentes tipos de
 dados. As técnicas aplicadas dependem principalmente ao tipo de dados no qual
-busca-se criar clusters. Comumente, tais técnicas são aplicadas domínio de dados
-contínuos, como é o caso de métodos celebres como \textit{K means} e
+busca-se criar clusters. Comumente, tais técnicas são aplicadas no domínio de
+dados contínuos, como é o caso de métodos celebres como \textit{K means} e
 \textit{Clustering Hierárquico}, disponíveis via interfaces populares e bem
 optimizadas como o scipy\cite{scikit_clustering_docs}.
 
@@ -111,8 +113,8 @@ solucionável.
 Como definido em
 \cite{maximum_likelihood_from_incomplete_data_via_the_em_algorithm}, modelos
 probabilísticos buscam maximizar a probabilidade do conjunto de dados analisados
-segundo seu o modelo que está sendo ajustado. Tal conceito foi expandido através
-de processos para ajustar redes Bayesianas\cite{bayesian_network}, onde cada nó
-do grafo representa uma variável aleatória e as arestas permitem calcular a
-distribuição de probabilidade conjunto das várias variáveis ligadas entre si.
+segundo um modelo que é ajustado iterativamente. Tal conceito foi expandido para
+ajustar redes Bayesianas\cite{bayesian_network}, onde cada nó do grafo
+representa uma variável aleatória e as arestas permitem calcular a distribuição
+de probabilidade conjuntas das várias variáveis ligadas entre si.
 

@@ -1,4 +1,4 @@
-\section{Introdução}
+\section{Introdução[estável]}
 O desenvolvimento de programas no mundo atual depende frequentemente do uso de
 APIs, muitas vezes desenvolvidas por equipes completamente desconexas.
 Frequentemente, a utilização de funções provenientes de tais fontes espera que
@@ -8,11 +8,11 @@ Tais descuidos podem levar a nenhuma consequência grave, graves erros de
 segurança ou apenas comportamentos inesperados pela aplicação; as implicações de
 violar os padrões de uso de uma API são muitas vezes imprevisíveis.
 
-Contudo, descobrir quais padrões de uso são necessários por uma API é muitas
-vezes difícil. A fonte principal para tal tipo de informação seria a
-documentação da API em questão, porém muitas vezes esta se mostra insuficiente
-ou limitada. Um exemplo claro de tal são as páginas do manual Linux para as
-funções \textit{fopen} e \textit{fclose} na linguagem C \cite{man_fopen}
+Descobrir quais padrões de uso são necessários por uma API é muitas vezes
+difícil. A fonte principal para tal tipo de informação seria a documentação da
+biblioteca em questão. Porém, muitas vezes, esta se mostra insuficiente ou
+limitada. Um exemplo claro de tal são as páginas do manual Linux para as funções
+\textit{fopen} e \textit{fclose} na linguagem C \cite{man_fopen}
 \cite{man_fclose}.
 
 Qualquer desenvolvedor de C informado saberia dizer que um \textit{fclose}
@@ -23,11 +23,11 @@ uma simples leitura da documentação, mas sim através de exemplos de código o
 discussões informais com outros desenvolvedores.
 
 Devido a tal, os reais padrões de uso que devem ser respeitados enquanto
-utilizando APIs permanecem obscuros. Assim, vários estudos foram e continuam a
-serem feitos para detectar tais de forma automática.
+utilizando os métodos permanecem desconhecidos. Assim, vários estudos foram e
+continuam a serem feitos para detectar tais de forma automática.
 
-O presente estudo, então, busca aplicar técnicas desenvolvidas na área para a
-detecção de padrões de uso na \textit{glibc}. Os objetivos principais são
-realizar uma análise comparativa das diferentes formas que tal mineração de
-dados pode ser feita, quais as vantagens e desvantagens de cada e gerar
-catálogos dos padrões de uso encontrados pelos métodos.
+O presente estudo, inserido neste meio, então, busca aplicar técnicas
+desenvolvidas na área para a detecção de padrões de uso na \textit{glibc}. Os
+objetivos principais são realizar uma análise comparativa das diferentes formas
+que tal mineração de dados pode ser feita e gerar um catálogo dos padrões de uso
+encontrados pelos métodos.
