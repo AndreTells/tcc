@@ -11,8 +11,10 @@ def extract_next_page_link(link: str)->str|None:
     return None 
 
 
-def main(num_stars:int=50):
-    link = f"https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A%3E%3D{num_stars}"
+def list_repos(max_stars:int|None=None, min_stars:int=1500):
+    link = f"https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A%3E%3D{min_stars}"
+    if(max_stars):
+        link = f"https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A{min_stars}..{max_stars}&per_page=100"
 
     while True:
         res = requests.get(link)
@@ -35,4 +37,7 @@ def main(num_stars:int=50):
         if(link is None):
             break
 
+def main():
+    list_repos(max_stars=3000, min_stars=1500)
+    list_repos(min_stars=3001)
 main()
