@@ -11,7 +11,7 @@ def extract_next_page_link(link: str)->str|None:
     return None 
 
 
-def main(num_stars:int=1000):
+def main(num_stars:int=50):
     link = f"https://api.github.com/search/repositories?q=language%3AC%20is%3Apublic%20stars%3A%3E%3D{num_stars}"
 
     while True:
