@@ -24,13 +24,15 @@ nos padrões detectados. Supondo que os códigos minerados em si possuam erros,
 como é frequentemente o caso para programas, os padrões de uso detectados nesses
 também estariam errados. 
 
-A fim de mitigar este problemas, os projetos para análise foram segundo um
-estudo \cite{comp_mining_source_code}, como comentado anteriormente, buscando
-exatamente classificar projetos que tenham um nível razoável de qualidade.
-Apesar de não garantir que estejam livres de erros, espera-se que o fato de os
-programas em questão seguirem boas práticas de desenvolvimento de software
-indique minimamente que funcionem como esperado e, logo, tenham poucos erros.
-Dessa forma, espera-se que tais sigam minimamente padrões de uso reais. 
+A fim de mitigar este problemas, foram escolhidos projetos com mais de 1500
+estrelas, que como apontado por outros estudos \cite{comp_mining_source_code}
+buscando exatamente classificar projetos que tenham um nível razoável de
+qualidade, esta faixa de projetos apresenta uma taxa extremamente baixa de
+falsos positivos. Apesar de não garantir que estejam livres de erros, espera-se
+que o fato de os programas em questão seguirem boas práticas de desenvolvimento
+de software indique minimamente que funcionem como esperado e, logo, tenham
+poucos erros. Dessa forma, espera-se que tais sigam minimamente padrões de uso
+reais. 
 
 Outro ponto que pode causar padrões incorretos a serem detectados é a
 longevidade das APIs. Ao longo do tempo funções são adicionadas, removidas ou

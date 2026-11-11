@@ -29,14 +29,12 @@ contexto busca-se determinar dois conjuntos de padrões detectados:
 \subsection{Mineração dos Padrões de Uso}
 
 Todos os algoritmos apresentados as seção anterior são aplicados sobre o mesmo
-conjunto de dados, uma lista de projetos em C disponibilizados no Github. A fim
-de obter apenas projetos com um certo nível de qualidade, foi utilizado um
-subconjunto do resultado desenvolvido por Nuthan Munaiah et. all
-\cite{repo_list}, filtrando para obter apenas repositórios utilizando código em
-C e que sejam, segundo a definição do artigo citado, considerados 'projetos de
-software planejados' e 'úteis'. Adicionalmente, para controlar o escopo do
-presente estudo e evitar forks de um mesmo código base no dataset já mencionado,
-considerou-se apenas projetos com no mínimo 100 estrelas.
+conjunto de dados, uma lista de projetos em C disponibilizados no Github. Foram
+selecionados projetos em C com mais de 1500 estrelas no github, próximo ao valor
+de estrelas mínimo selecionado em outros projetos \cite{engineered_proj}
+\cite{repo_superposition_collaboration}. Tal escolha baseia-se no fato de
+popularidade de projetos no Github ser relacionado a qualidade do projeto
+\cite{repo_superposition_success} \cite{repo_superposition_collaboration}.
 
 %TODO: traduzir imagem
 \begin{figure}[h]
