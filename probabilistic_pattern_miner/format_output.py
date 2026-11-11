@@ -38,4 +38,3 @@ def main():
 
     for pat in patterns(argv[1]):
         print(','.join(pat.pattern))
-main()
