@@ -40,4 +40,3 @@ def list_repos(max_stars:int|None=None, min_stars:int=1500):
 def main():
     list_repos(max_stars=3000, min_stars=1500)
     list_repos(min_stars=3001)
-main()
