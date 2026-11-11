@@ -33,7 +33,7 @@ pkgs.writeTextFile {
     cat ${base} >> in.arff;
     ${input_formatter} temp.csv >> in.arff;
     rm temp.csv;
-    java -jar ${pam_jar} -r 120 -f in.arff -o temp.txt;
+    java -jar ${pam_jar} -r 300 -f in.arff -o temp.txt;
     rm in.arff;
     ${output_formatter} temp.txt > probabilistic_pattern_miner_patterns.txt;
     rm temp.txt;
