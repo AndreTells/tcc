@@ -36,5 +36,5 @@ def main():
     if(len(argv) != 2):
         raise Exception("Incorrect number of command line arguments")
 
-    for pat in patterns(argv[1]):
+    for pat in filter(lambda x: len(x.pattern) > 1,patterns(argv[1])):
         print(','.join(pat.pattern))
