@@ -46,5 +46,3 @@ def main():
             cluster
         )
         print(','.join(cluester_funcs))
-
-main()
