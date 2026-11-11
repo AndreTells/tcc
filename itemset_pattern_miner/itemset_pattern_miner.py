@@ -26,9 +26,7 @@ def main():
             curr_set.append(elements[-1].strip())
         data.append(set(curr_set))
 
-    itemsets, rules = apriori(data, min_support=0.01)
+    itemsets, rules = apriori(data, min_support=0.15)
     for i in filter(lambda x: x>1,itemsets):
         for pattern in itemsets[i]:
             print(','.join(pattern))
-
-main()
