@@ -1,16 +1,30 @@
 \section{Análise}
 
-Em geral os padrões encontrados durante a análise são extremamente básicos,
-porém não incorretos. 
+Os métodos como pode ser visto pelos resultados na tabela \ref{2_comp},
+raramente detectaram os mesmos padrões. Tal é de certa forma esperado, como
+apontado por pelo autor do algorítimo
+probabilístico\cite{probabilistic_api_miner}, o método é feito para
+especificamente detectar também padrões menos representados no dataset completo.
+O método de mineração de regras de associação, por outro lado, por definição
+\cite{minig_association_rules}, é criado para detectar padrões que estão
+amplamente representados no dataset.
 
-Como mencionado no estudo sobre o método do modelo probabilístico
-\cite{probabilistic_api_miner}, o processo de configuração para este é mais
-simples e intuitivo do que as alternativas. No caso do método de mineração de
-regras de associação, a configuração via uma probabilidade mínima é difícil de
-ser regulado sem antes analisar o resultado para um dado valor. Já no método K
-modes, apesar de impor que o usuário saiba de antemão quantos  padrões deseja
-detectar, tem a vantagem de gerar um número fixo de resultados a serem
-analisados.
+Como pode-se observar pelas tabelas \ref{desc_item}, \ref{desc_clustering} e
+\ref{desc_pam}, todos os métodos detectam padrões de, em média, 2 funções. Tal é
+esperado de certa forma pois, quanto mais curto, mais fácil é de achar
+instâncias no dataset que suportem o padrão em questão.
 
-Contudo um problema que afetou todos os métodos foi a sobre representação de
-padrões contendo apenas uma função nos resultados finais.
+Outro ponto que se aplica a todos os métodos é a relativa baixa
+representatividade dos padrões detectados no dataset original. Uma possível
+explicação para tal efeito é o fato que padrões diferentes se aplicam em nichos
+diferentes. O padrão \textit{(pthread\_mutex\_lock,pthread\_mutex\_unlock)}
+exemplifica tal fenômeno pois se aplica, quase exclusivamente, em contextos onde
+threads estão em uso.
+
+Suportando tal tese também é o fato de funções ligadas a alocação de memória e a
+interação com arquivos estavam frequentemente em padrões detectados. Sendo a
+gestão de memoria e o uso de arquivos algo mandatório em C, não é surpreendente
+que estes padrões sejam tão sobre representados nos resultados.
+
+Com tal visão, não é surpreendente que as \% de utilização
+dos padrões detectados sejam relativamente baixas no dataset.
