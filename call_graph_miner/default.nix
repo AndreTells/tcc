@@ -55,10 +55,10 @@ pkgs.writeTextFile
 
     if [[ -n "$out_file" ]]; then
       cat ${base} >> $out_file
-      command="rg '#if' {} --files-without-match -q && ${function_extractor} {} $in_file >> $out_file; echo 'done {}'"
+      command="rg '#if' '{}' --files-without-match -q && ${function_extractor} '{}' $in_file >> $out_file; echo 'done {}'"
     else 
       cat ${base}
-      command="rg '#if' {} --files-without-match -q && ${function_extractor} {} $in_file"
+      command="rg '#if' '{}' --files-without-match -q && ${function_extractor} '{}' $in_file"
     fi
 
     find -L $in_file -name '*.c' | xargs -P 100 -I {} sh -c "$command"
