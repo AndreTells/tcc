@@ -1,3 +1,4 @@
+from typing import Iterable
 from functools import reduce
 import numpy as np
 import sys 
@@ -51,6 +52,10 @@ def count_elem(acc:dict[str,int], pattern:set[str]):
         acc[func]+=1
     return acc
 
+def pattern_str(pattern:Iterable[str]):
+    return f"({ ','.join(pattern) })"
+    
+
 def main():
     if (len(sys.argv) != 4):
         print("incorrect ammount of command line arguments")
@@ -62,9 +67,19 @@ def main():
     patterns = get_patterns(pattern_file)
 
     usages = list(map(
-        lambda x: calculate_pattern_usage(data, x),
+        lambda x: (x, calculate_pattern_usage(data, x)),
         patterns
     ))
+    usages_num = list(map(
+        lambda x: x[1],
+        usages 
+    ))
+
+    patterns_usage_ord = sorted(
+        usages,
+        key=lambda x: x[1],
+        reverse=True
+    )
 
     sizes = list(map(
         len,
@@ -80,10 +95,13 @@ def main():
 
     print(
         sys.argv[3],
-        max(usages),
-        min(usages),
-        np.mean(usages),
-        np.std(usages),
+        patterns_usage_ord[0][1],
+        pattern_str(patterns_usage_ord[0][0]),
+        patterns_usage_ord[-1][1],
+        pattern_str(patterns_usage_ord[-1][0]),
+        patterns_usage_ord[len(patterns_usage_ord)//2][1],
+        pattern_str(patterns_usage_ord[len(patterns_usage_ord)//2][0]),
+        np.std(usages_num),
         max(sizes),
         min(sizes),
         np.mean(sizes),
