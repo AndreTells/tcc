@@ -23,4 +23,5 @@ def main():
     m01 = len(patterns_2)
 
     print(m11/(m11+m10+m01))
+    print(patterns_1 & patterns_2)
 main()

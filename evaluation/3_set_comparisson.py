@@ -23,4 +23,5 @@ def main():
     union = len(patterns_1 | patterns_2 | patterns_3)
 
     print(inter/union)
+    print(patterns_1 & patterns_2 & patterns_3)
 main()
