@@ -50,6 +50,17 @@ Apesar de tal ressalva, ainda há a possibilidade da forma dos desenvolvedores
 utilizar os mesmos mecanismos antigos de novas formas, desenvolvendo novos
 padrões de uso. Para tal risco, o projeto não tem nenhuma proteção.
 
+Outro ponto importante a se mencionar é o tamanho dos projetos analisados para
+criar o dataset. Fundamentalmente, padrões de uso dependem de hábitos que
+desenvolvedores tem enquanto redigindo seus códigos. Desta forma se um projeto
+estiver sob representado no dataset, é possível que os padrões de uso detectados
+sejam apenas padrões de uso \textit{ da glibc em um projeto em específico }, e
+não padrões de uso da \textit{glibc}.
+
+Tal risco foi mitigado se certificando que nenhum projeto fosse responsável por
+mais de 25\% do dataset completo. Analisando as \% de suporte vistas nos
+resultados, tal não garante que o problema foi completamente evitado.
+
 \subsection{Análise Léxica dos arquivos}
 No âmbito de como o grafo de chamadas é obtido há também o problema de funções
 com o mesmo nome. Do ponto de vista da linguagem C, não há nenhuma restrição
