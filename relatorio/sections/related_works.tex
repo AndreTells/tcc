@@ -1,8 +1,38 @@
 \section{Trabalhos Relacionados}
-%TODO: listar trabalhos de revisão na área
+
 Em geral outros já realizaram o trabalho de avaliar diferentes formas de minerar
-padrões de uso, porém poucos o fizeram para códigos em C especificamente, menos
-ainda disponibilizam os padrões detectados em suas pesquisas na forma de um
-catálogo e, dentre os trabalhos lidos no processo de escrita do presente estudo,
-nenhum disponibilizava um catalogo de padrões de uso para a linguagem C.
-TODO adicionar outros trabalhos ... 
+padrões de uso, destacam-se trabalhos de revisão na área como
+\cite{api_property_inference}
+\cite{recommender_system_software_engineering_nearest_neighbours}, que comparam
+várias formas de obter informações sobre desenvolvimento de software analisando
+grandes quantidades de código.
+
+Frequentemente na área são propostas de metodologia distintas, diferindo em:
+\begin{itemize}
+  \item fontes de dados distintas \cite{up_miner} %TODO: add ref to mining of
+                                                  % stack overflow data
+  \item utilizar-se de aspectos da linguagem que analisam \cite{mapo}
+  \item utilizar-se de informações do código em execução \cite{groums}
+  \cite{focus}
+\end{itemize}
+
+Porém, aparte alguns casos especiais \cite{probabilistic_api_miner}
+\cite{groums} \cite{prefix_span} \cite{focus}, o método mais comum de encontrar
+padrões é através de mineração de regras de associação.
+
+Um trabalho extremamente similar ao presente é o feito por H. Kagdi et al.
+\cite{comp_mining_source_code}. O estudo avalia mineração de padrões de uso em
+C, comparando mineração por regras de associação e por mineração de padrões
+sequenciais. Além da escolha de métodos sendo comparados, tal análise minera e
+avalia padrões de uso de todas funções no kernel linux. O número de violações
+dos padrões de uso é utilizado como ponto de comparação para os resultados 
+
+Adicionalmente, tal estudo avalia padrões de uso ordenados e não ordenados,
+enquanto o presente avalia apenas padrões de uso não ordenados.
+
+Como levantado em \cite{api_property_inference}
+\cite{analyzing_temporal_api_usage_patterns}, a avaliação automática de
+resultados na área é um problema recorrente. A decisão escolhida é
+frequentemente apelar para simples análises descritivas dos resultados ou, se
+houver tempo e orçamento o suficientes disponíveis, realizar entrevistas com
+desenvolvedores para validar os dados encontrados. 
