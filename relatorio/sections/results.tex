@@ -4,35 +4,37 @@
 \centering
 \begin{tabular}{ | c | c |}
   \hline
-  qual a função mais comum nos padrões detectados & free \\
+  função mais comum nos padrões & free \\
   \hline
-  maior \% de utilização de um padrão de uso no dataset & 16,43\% \\
+  maior suporte & 16,43\% \\
   \hline
-  \% média de utilização dos padrões de uso no dataset & \\
+  suporte médio & 1,98\% \\
   \hline
-  \% mediana de utilização dos padrões de uso no dataset & 1,22\% \\
+  suporte mediano & 1,22\% \\
   \hline
-  menor \% de utilização de um padrão de uso no dataset & 0.70\% \\
+  menor suporte & 0.70\% \\
   \hline
-  desvio padrão \% de utilização de um padrão de uso no dataset & 2,16\% \\
+  desvio padrão suporte & 2,16\% \\
   \hline
-  padrão de uso com maior \% de utilização no dataset & malloc, free\\
+  padrão de uso com maior suporte & malloc, free\\
   \hline
-  padrão de uso com menor \% de utilização no dataset & strncmp, snprintf\\
+  padrão de uso com menor suporte & memset, calloc, \\
+   & snprintf,strcmp\\
   \hline
   maior tamanho de padrão de uso & 4 \\
   \hline
   tamanho médio dos padrões de uso & 2,6 \\
   \hline
-  tamanho mediano dos padrões de uso & \\
+  tamanho mediano dos padrões de uso & 2\\
   \hline
   menor tamanho de padrão de uso & 2\\
   \hline
   desvio padrão do tamanho de padrão de uso & 0,7 \\
   \hline
-  maior padrão de uso detectado &  \\
+  maior padrão de uso detectado & calloc, memcpy, \\
+  &  free, malloc\\
   \hline
-  menor padrão de uso detectado & \\
+  menor padrão de uso detectado & strstr, strlen\\
   \hline
   número de padrões detectados & 150 \\
   \hline
@@ -45,37 +47,40 @@
 \centering
   \begin{tabular}{ | c | c |}
 \hline
-qual a função mais comum nos padrões detectados & malloc \\
+função mais comum nos padrões detectados & malloc \\
 \hline
-maior \% de utilização de um padrão de uso por arquivo & 16,43\% \\
+maior suporte & 16,43\% \\
 \hline
-\% média de utilização dos padrões de uso por arquivo & \\
+suporte médio & 2,13\% \\
 \hline
-\% mediana de utilização dos padrões de uso por arquivo & 3,79\% \\
+suporte mediano & 1,02\% \\
 \hline
-menor \% de utilização de um padrão de uso por arquivo & 0,00\% \\
+menor suporte & 0,00\% \\
 \hline
-desvio padrão \% de utilização de um padrão de uso por arquivo & 4,70\% \\
+desvio padrão do suporte & 4,70\% \\
 \hline
-padrão de uso com maior \% de utilização por arquivo & free, malloc \\
+padrão de uso com maior suporte & free, malloc \\
 \hline
-padrão de uso com menor \% de utilização por arquivo & sprintf,\_exit, getpid \\
+padrão de uso com menor suporte & sprintf, strcpy \\
+&  memcpy, free, strcmp \\
 \hline
-maior tamanho de padrão de uso & 3\\
+maior tamanho de padrão de uso & 8\\
 \hline
-tamanho médio dos padrões de uso & 2.29\\
+tamanho médio dos padrões de uso & 2.65 \\
 \hline
-tamanho mediano dos padrões de uso & \\
+tamanho mediano dos padrões de uso & 2 \\
 \hline
 menor tamanho de padrão de uso & 2\\
 \hline
-desvio padrão do tamanho de padrão de uso & 0.45\\
+desvio padrão do tamanho de padrão de uso & 1.03 \\
 \hline
-maior padrão de uso detectado & \\
+maior padrão de uso detectado & fread, strlen, memcpy\\
+& memset, free, strchr\\
+& fgetc, strcmp\\
 \hline
-menor padrão de uso detectado & \\
+menor padrão de uso detectado & inb\_p, outb\_p\\
 \hline
-número de padrões detectados & 14\\
+número de padrões detectados & 82\\
 \hline
 \end{tabular}
 \caption{Análise estatística dos padrões detectados via clustering}
@@ -86,36 +91,37 @@ número de padrões detectados & 14\\
 \centering
 \begin{tabular}{ | c | c |}
   \hline
-  qual a função mais comum nos padrões detectados & close \\
+  função mais comum nos padrões detectados & close \\
   \hline
-  maior \% de utilização de um padrão de uso no dataset & 4,70\% \\
+  maior suporte & 4,70\% \\
   \hline
-  \% média de utilização dos padrões de uso no dataset &  \\
+  suporte médio &  0,21\%\\
   \hline
-  \% mediana de utilização dos padrões de uso no dataset & 0,11\% \\
+  suporte mediano & 0,11\% \\
   \hline
-  menor \% de utilização de um padrão de uso no dataset & 0,05\% \\
+  menor suporte & 0,05\% \\
   \hline
-  desvio padrão \% de utilização de um padrão de uso no dataset & 0,4\% \\
+  desvio padrão do suporte & 0,4\% \\
   \hline
-  padrão de uso com maior \% de utilização no dataset & pthread\_mutex\_unlock, \\
+  padrão de uso com maior suporte & pthread\_mutex\_unlock, \\
    & pthread\_mutex\_lock \\
   \hline
-  padrão de uso com menor \% de utilização no dataset & fork, \_exit \\
+  padrão de uso com menor suporte & fork, \_exit \\
   \hline
   maior tamanho de padrão de uso & 5\\
   \hline
   tamanho médio dos padrões de uso & 2,45 \\
   \hline
-  tamanho mediano dos padrões de uso &  \\
+  tamanho mediano dos padrões de uso & 2 \\
   \hline
   menor tamanho de padrão de uso & 2\\
   \hline
   desvio padrão do tamanho de padrão de uso & 0,73 \\
   \hline
-  maior padrão de uso detectado & \\
+  maior padrão de uso detectado & strcmp, strstr\\
+   & strdup, malloc, calloc\\
   \hline
-  menor padrão de uso detectado & \\
+  menor padrão de uso detectado & vprintf, putchar\\
   \hline
   número de padrões detectados & 111 \\
   \hline
