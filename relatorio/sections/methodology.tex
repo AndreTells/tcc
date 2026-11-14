@@ -115,21 +115,14 @@ e outra comparando os resultados entre métodos.
 A primeira etapa envolve calcular estatísticas descritivas sobre os padrões
 encontrados por cada um dos algoritmos:
 \begin{itemize}
-  \item qual a função mais comum nos padrões detectados
-  \item maior \% de utilização de um padrão de uso por arquivo
-  \item \% média de utilização dos padrões de uso por arquivo
-  \item \% mediana de utilização dos padrões de uso por arquivo
-  \item menor \% de utilização de um padrão de uso por arquivo
-  \item desvio padrão \% de utilização de um padrão de uso por arquivo
-  \item padrão de uso com maior \% de utilização por arquivo
-  \item padrão de uso com menor \% de utilização por arquivo
-  \item maior \% de utilização de um padrão de uso por projeto
-  \item \% média de utilização dos padrões de uso por projeto
-  \item \% mediana de utilização dos padrões de uso por projeto
-  \item menor \% de utilização de um padrão de uso por projeto
-  \item desvio padrão \% de utilização de um padrão de uso por projeto
-  \item padrão de uso com maior \% de utilização por projeto
-  \item padrão de uso com menor \% de utilização por projeto
+  \item função mais comum nos padrões detectados
+  \item maior suporte 
+  \item suporte médio 
+  \item suporte mediano 
+  \item menor suporte 
+  \item desvio padrão do suporte 
+  \item padrão de uso com maior suporte 
+  \item padrão de uso com menor suporte 
   \item maior tamanho de padrão de uso
   \item tamanho médio dos padrões de uso
   \item tamanho mediano dos padrões de uso
@@ -139,8 +132,12 @@ encontrados por cada um dos algoritmos:
   \item menor padrão de uso detectado
   \item número de padrões detectados
 \end{itemize}
-Considera-se neste contexto "utilização de um padrão de uso" como uma função que
-chame todos as funções dentro de um dado padrão de uso.
+%TODO: analisar quais arquivos .h contem as funções no padrão
+%TODO: quantos .h nas funções no padrão
+
+
+Considera-se neste contexto "suporte" de um padrão é a \% de pontos no dataset
+que utiliza o dado padrão.
 
 \subsubsection{Avaliação Comparativa}
 O índice de Jacquard\cite{jaccard}, indicando o grau de similaridade par a par
