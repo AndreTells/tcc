@@ -4,6 +4,7 @@ let
     sha256 = "sha256-V3IzXbAPnKwEIjvuFx3ab9XbQwa3P18YDF3Z36sTUHg=";
   };
   pkgs = import nixpkgs {};
+  parser = import ./header_parser.nix;
 in 
 pkgs.stdenv.mkDerivation
 {
@@ -14,6 +15,7 @@ pkgs.stdenv.mkDerivation
   nativeBuildInputs = with pkgs; [
     clang 
     llvmPackages_latest.libclang
+    ripgrep
   ];
 
   buildPhase = ''
@@ -21,6 +23,10 @@ pkgs.stdenv.mkDerivation
   '';
 
   installPhase = ''
-    find ${pkgs.glibc.dev}/include -name '*\.h' | xargs -I {} ./a.out {} >> $out 
+    export GLIBC_PATH=${pkgs.glibc.dev}
+    export temp=$(mktemp)
+    rg '(# error|#error)' --files-without-match ${pkgs.glibc.dev}/include -g '!finclude' -g '!bits/' | xargs -P 100 -I {} sh -c "${parser} {} 2>/dev/null >> $temp|| echo {}" 
+    cat $temp | sort | uniq > $out
+    rm $temp
   '';
 }
