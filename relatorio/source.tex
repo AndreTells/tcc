@@ -1,10 +1,83 @@
-\documentclass{article}
+% Exemplo de relatório técnico do IC
+% Criado por P.J.de Rezende antes do Alvorecer da História.
+% Modificado em 97-06-15 e 01-02-26 por J.Stolfi.
+% Last edited on 2003-06-07 21:12:18 by stolfi
+% modificado em 1o. de outubro de 2008
+% modificado em 2012-09-25 para ajustar o pacote UTF8. Contribuicao de
+%   Rogerio Cardoso
+
+\documentclass[11pt,twoside]{article}
+\usepackage{techrep-PFG-ic}
+
+%%% SE USAR INGLÊS, TROQUE AS ATIVAÇÕES DOS DOIS COMANDOS A SEGUIR:
+\usepackage[brazil]{babel}
+%% \usepackage[english]{babel}
+
+%%% SE USAR CODIFICAÇÃO LATIN1, TROQUE AS ATIVAÇÕES DOS DOIS COMANDOS A
+%%% SEGUIR:
+%% \usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \graphicspath{{./images}}
 
 \begin{document}
+  %%% PÁGINA DE CAPA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % 
+  % Número do relatório
+  \TRNumber{46}
+
+  % DATA DE PUBLICAÇÃO (PARA A CAPA)
+  %
+  \TRYear{26}  % Dois dígitos apenas
+  \TRMonth{12} % Numérico, 01-12
+
+  % LISTA DE AUTORES PARA CAPA (sem afiliações).
+  \TRAuthor{André Silva Telles}
+
+  % TÍTULO PARA A CAPA (use \\ para forçar quebras de linha).
+  \TRTitle{Mineração de Padrões de Uso \\ de APIs na Biblioteca Standard C}
+
+  \TRMakeCover
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % O que segue é apenas uma sugestão - sinta-se à vontade para
+  % usar seu formato predileto, desde que as margens tenham pelo
+  % menos 25mm nos quatro lados, e o tamanho do fonte seja pelo menos
+  % 11pt. Certifique-se também de que o título e lista de autores
+  % estão reproduzidos na íntegra na página 1, a primeira depois da
+  % página de capa.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Nomes de autores ABREVIADOS e titulo ABREVIADO,
+  % para cabeçalhos em cada página.
+  %
+  \markboth{André S. Telles}{Mineração de Padrões de Uso}
+  \pagestyle{myheadings}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % TÍTULO e NOMES DOS AUTORES, completos, para a página 1.
+  % Use "\\" para quebrar linhas, "\and" para separar autores.
+  %
+  \title{Mineração de Padrões de Uso \\ de APIs na Biblioteca Standard C}
+
+  \author{André Silva Telles}
+
+  \date{}
+
+  \maketitle
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \begin{abstract} 
+    Este trabalho busca comparar diferentes métodos de minerar padrões de uso
+    aplicando-os a tarefa de encontrar padrões de uso na \textit{glibc} através
+    de repositórios no GitHub.
+  \end{abstract}
+
   \include{sections/introduction.tex}
   \include{sections/background.tex}
   \include{sections/methodology.tex}
@@ -13,5 +86,8 @@
   \include{sections/related_works.tex}
   \include{sections/threats.tex}
   \include{sections/conclusion.tex}
-  \include{references}
+
+  \bibliographystyle{abntex2-alf}
+  \bibliography{references}
+
 \end{document}
