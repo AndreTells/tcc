@@ -112,7 +112,11 @@ funções é seu nome acrecido do caminho até o arquivo que o contem e o nome d
 projeto no qual este arquivo se encontra. Dessa forma esta série de transação
 pode ser utilizada pelo algoritmo apriori\cite{minig_association_rules}
 mencionado anteriormente, encontrando regras de utilização que, no presente
-context, são os padrões de uso das funções.
+context, são os padrões de uso das funções. 
+
+Seguindo a ordem de grandeza utilizada por outros trabalhos utilizando
+aprendizado de regras de associação na área\cite{comp_mining_source_code}, foi
+utilizado 0,7\% como valor de suporte mínimo para a mineração.
 
 \paragraph{Clustering}
 
@@ -127,6 +131,10 @@ Tal transformação permite então a criação de uma lista de pontos com um nú
 igual de variáveis categóricas, onde o algoritmo \textit{k modes} pode
 facilmente ser executado para buscar por clusters, ou seja, os padrões de uso
 das funções.
+
+Utilizando a quantidade de padrões detectados em outros estudos como
+base\cite{comp_mining_source_code}, decide-se utilizar 80 como número de
+clusters inicial.
 
 \paragraph{Modelo Probabilístico}
 
