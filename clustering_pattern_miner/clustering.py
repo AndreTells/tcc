@@ -22,18 +22,18 @@ def main():
         points
     ))
 
-    k = 1
-    model = KModes(n_clusters=k, init='Huang', n_init=4)
+    k = 80
+    model = KModes(n_clusters=k, init='Huang', n_init=100)
     model.fit_predict(np.array(points))
     prev_cost = model.cost_
 
     while True:
         k= k+1
-        model_ = KModes(n_clusters=k, init='Huang', n_init=4)
+        model_ = KModes(n_clusters=k, init='Huang', n_init=100)
         model_.fit_predict(np.array(points))
         new_cost = model_.cost_
 
-        if( new_cost > prev_cost * 0.999):
+        if( new_cost > prev_cost * 0.9999):
             break
 
         model = model_
