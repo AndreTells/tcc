@@ -28,6 +28,7 @@ contexto busca-se determinar dois conjuntos de padrões detectados:
 
 \subsection{Mineração dos Padrões de Uso}
 
+\subsubsection{Conjunto de Dados}
 Todos os algoritmos apresentados as seção anterior são aplicados sobre o mesmo
 conjunto de dados, uma lista de projetos em C disponibilizados no Github. Foram
 selecionados projetos em C com mais de 1500 estrelas no github, próximo ao valor
@@ -36,14 +37,6 @@ de estrelas mínimo selecionado em outros projetos \cite{engineered_proj}
 popularidade de projetos no Github ser relacionado a qualidade do projeto
 \cite{repo_superposition_success} \cite{repo_superposition_collaboration}.
 
-%TODO: traduzir imagem
-\begin{figure}[h]
-  \includegraphics[width=1\textwidth]{pipeline_overview}
-  \caption{Visão global das etapas para minerar os padrões de uso neste estudo}
-  \label{fig:pipeline_overview}
-\end{figure}
-
-%TODO: adicionar referências a ids de blocos na imagem
 A partir dos arquivos fontes escritos na linguagem C nos projetos selecionados,
 um grafo de chamadas é extraído para as análises. Para este processo são
 considerados apenas arquivos que não utilizam diretivas de pré-processamento
@@ -70,11 +63,46 @@ algoritmos não teria impacto no resultado. Como no presente estudo a
 complexidade de tempo do processo de filtrar os arquivos é inferior a dos
 algoritmos, é preferível que tal seja feito antes.
 
+O dataset, após tais etapas de pré-processamento, possui 478 projetos distintos
+com um total de 7726 arquivos e aproximadamente 29k funções. Analisando os
+arquivos, observa-se que em média cada arquivo possuí 3,74 funções que, em
+média, chamam 2,86 funções da \textit{glibc}. Contudo, como pode-se observar
+pelo gráfico da distribuição destas variáveis na figura \ref{fig:dist_dataset},
+é importante mencionar que a distribuição é extremamente assimétrica.
+
+\begin{figure}[h]
+  \includegraphics[width=0.3\textwidth]{file_num_distribution}
+  \includegraphics[width=0.3\textwidth]{caller_num_distribution}
+  \includegraphics[width=0.3\textwidth]{callee_num_distribution}
+  \caption{Distribuição arquivos, funções e número de chamadas por função do
+  conjunto de dados filtrado}
+  \label{fig:dist_dataset}
+\end{figure}
+
+Observa-se também, através da imagem \ref{fig:top10_projects}, que nenhum dos
+projetos domina o dataset.
+
+\begin{figure}[h]
+  \includegraphics[width=1\textwidth]{top10_projects_file_num}
+  \caption{10 maiores projetos por número de arquivos no conjunto de dados}
+  \label{fig:top10_projects}
+\end{figure}
+
+\subsubsection{Processo}
+%TODO: traduzir imagem
+\begin{figure}[h]
+  \includegraphics[width=1\textwidth]{pipeline_overview}
+  \caption{Visão global das etapas para minerar os padrões de uso neste estudo}
+  \label{fig:pipeline_overview}
+\end{figure}
+
+%TODO: adicionar referências a ids de blocos na imagem
+
 Uma vez que esta etapa de pré-processamento está finalizada, os dados são formatados para
 adequar-se a entrada esperada por cada um dos algoritmos utilizados. A seguir é
 especificado como tais são aplicados ao problema de mineração de padrões de uso.
 
-\subsubsection{Aprendizado de Regras de Associação}
+\paragraph{Aprendizado de Regras de Associação}
 
 Métodos baseados em mineração de padrões de bancos de dados de transações são
 communs \cite{up_miner} \cite{groums}, sendo quase o método padrão
@@ -86,7 +114,7 @@ pode ser utilizada pelo algoritmo apriori\cite{minig_association_rules}
 mencionado anteriormente, encontrando regras de utilização que, no presente
 context, são os padrões de uso das funções.
 
-\subsubsection{Clustering}
+\paragraph{Clustering}
 
 Como utilizado em vários algoritmos da literatura\cite{mapo} \cite{groums}
  \cite{oop_pattern_mining}, clustering é utilizado como
@@ -100,7 +128,7 @@ igual de variáveis categóricas, onde o algoritmo \textit{k modes} pode
 facilmente ser executado para buscar por clusters, ou seja, os padrões de uso
 das funções.
 
-\subsubsection{Modelo Probabilístico}
+\paragraph{Modelo Probabilístico}
 
 Seguindo a implementação desenvolvida por \cite{probabilistic_api_miner}, as
 funções possíveis no conjunto de dados são vértices do grafo do modelo
@@ -132,9 +160,6 @@ encontrados por cada um dos algoritmos:
   \item menor padrão de uso detectado
   \item número de padrões detectados
 \end{itemize}
-%TODO: analisar quais arquivos .h contem as funções no padrão
-%TODO: quantos .h nas funções no padrão
-
 
 Considera-se neste contexto "suporte" de um padrão é a \% de pontos no dataset
 que utiliza o dado padrão.
